@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "FAS1002_projet-final"
+  title: "FAS1002_projet-pratique"
   description: | 
     "Page d'accueil du travail final pour le cours FAS1002 -
     Initiation à la programmation en sciences sociales à
