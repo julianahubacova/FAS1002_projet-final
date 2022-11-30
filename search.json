@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "Titre de votre page d’introduction",
-    "section": "",
-    "text": "Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l’importation et la manipulation des données.\nJe vous conseille d’écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d’éviter de réécrire cette page plusieurs fois.\n\n\n\n\n\n\nImportant\n\n\n\nN’oubliez pas d’inclure vos références sur chacune des pages!\n\n\nPar exemple:\n\nLes données proviennent entre autres de Ritchie, Roser, et Rosado (2022).\n\n\n\n\n\nLes références\n\nRitchie, Hannah, Max Roser, et Pablo Rosado. 2022. « Energy ». Our World in Data.\n\nCitationBibTeX@online{nom2023,\n  author = {Prénom Nom},\n  title = {Titre de votre page d’introduction},\n  date = {2023-09-12},\n  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//intro.html},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nPrénom Nom. 2023. “Titre de votre page d’introduction.”\nSeptember 12, 2023. https://VOTREUSERNAME.github.io/FAS1002_projet-final//intro.html."
-  },
-  {
     "objectID": "a-propos.html#bio",
     "href": "a-propos.html#bio",
     "title": "À propos",
@@ -19,6 +12,20 @@
     "title": "À propos",
     "section": "Contact",
     "text": "Contact\nProgramme | Microprogramme en analyse des mégadonnées en sciences humaines et sociales\nUniversité | Université de Montréal\nCourriel | fas1002@samuelguay.ca"
+  },
+  {
+    "objectID": "import.html",
+    "href": "import.html",
+    "title": "Titre de votre page d’importation",
+    "section": "",
+    "text": "Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l’importation et la manipulation des données.\nJe vous conseille d’écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d’éviter de réécrire cette page plusieurs fois.\n\n\n\n\n\n\nImportant\n\n\n\nN’oubliez pas d’inclure vos références sur chacune des pages!\n\n\nPar exemple:\n\nLes données proviennent entre autres de Ritchie, Roser, et Rosado (2022).\n\nRitchie, Roser, et Rosado (2022)\n\n\n\n\n\nCode\nURL <- \"https://github.com/FAS1002/A22/raw/main/assets/fichiers/olympic_archive.zip\"\n\nbase_path <- path(\"data\", \"raw\")\nfname <- paste0(today(),\"olympic_archive.zip\",\n                sep = \"_\")\n\nfname\n\n\n[1] \"2022-11-29olympic_archive.zip_\"\n\n\nCode\nfpath <- path(base_path, fname)\n\nfpath\n\n\ndata/raw/2022-11-29olympic_archive.zip_\n\n\nCode\ndownload.file(url =URL, destfile = fpath)\n\n# extraction\nunzip(zipfile = fpath, \n      exdir = base_path)\n\n\nWarning in unzip(zipfile = fpath, exdir = base_path): error -1 in extracting\nfrom zip file\n\n\n\n\n\n\n\nLes références\n\nRitchie, Hannah, Max Roser, et Pablo Rosado. 2022. « Energy ». Our World in Data.\n\nCitationBibTeX@online{nom2023,\n  author = {Prénom Nom},\n  title = {Titre de votre page d’importation},\n  date = {2023-09-12},\n  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nPrénom Nom. 2023. “Titre de votre page d’importation.”\nSeptember 12, 2023. https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html."
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Titre de votre page d’introduction",
+    "section": "",
+    "text": "Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l’importation et la manipulation des données.\nJe vous conseille d’écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d’éviter de réécrire cette page plusieurs fois.\n\n\n\n\n\n\nImportant\n\n\n\nN’oubliez pas d’inclure vos références sur chacune des pages!\n\n\nPar exemple:\n\nLes données proviennent entre autres de Ritchie, Roser, et Rosado (2022).\n\n\n\n\n\nLes références\n\nRitchie, Hannah, Max Roser, et Pablo Rosado. 2022. « Energy ». Our World in Data.\n\nCitationBibTeX@online{nom2023,\n  author = {Prénom Nom},\n  title = {Titre de votre page d’introduction},\n  date = {2023-09-12},\n  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//intro.html},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nPrénom Nom. 2023. “Titre de votre page d’introduction.”\nSeptember 12, 2023. https://VOTREUSERNAME.github.io/FAS1002_projet-final//intro.html."
   },
   {
     "objectID": "index.html",
@@ -40,13 +47,6 @@
     "title": "FAS1002_projet-final",
     "section": "Remerciements",
     "text": "Remerciements\n\nJ’aimerais remercier toute la cohorte du cours FAS1002 de l’automne 2022 pour leur ouverture et efforts tout au long de la session!"
-  },
-  {
-    "objectID": "import.html",
-    "href": "import.html",
-    "title": "Titre de votre page d’importation",
-    "section": "",
-    "text": "Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l’importation et la manipulation des données.\nJe vous conseille d’écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d’éviter de réécrire cette page plusieurs fois.\n\n\n\n\n\n\nImportant\n\n\n\nN’oubliez pas d’inclure vos références sur chacune des pages!\n\n\nPar exemple:\n\nLes données proviennent entre autres de Ritchie, Roser, et Rosado (2022).\n\n\n\n\n\nLes références\n\nRitchie, Hannah, Max Roser, et Pablo Rosado. 2022. « Energy ». Our World in Data.\n\nCitationBibTeX@online{nom2023,\n  author = {Prénom Nom},\n  title = {Titre de votre page d’importation},\n  date = {2023-09-12},\n  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nPrénom Nom. 2023. “Titre de votre page d’importation.”\nSeptember 12, 2023. https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html."
   },
   {
     "objectID": "exploration.html",
