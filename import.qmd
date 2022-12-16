@@ -1,27 +1,16 @@
 ---
-title: "Titre de votre page d'importation"
+title: "Importation des données"
 title-block-banner: false
-description: | 
-  Petite description de cette page.
-# à changer
-date: "2022-12-21"
-# Modifier les détails que vous voulez
+description: 
+    Informations concernant la provenance des données et leur importation. 
+date: "2022-12-20"
 author:
-  - name: "Prénom Nom"
-    # Votre site web perso ou github
+  - name: "Juliana Hubacova"
     url: https://github.com/VOTREUSERNAME
-    # les champs d'affiliation sont optionnels, vous pouvez les
-    # comment out en ajoutant un # devant.
     affiliation: FAS1002
     affiliation-url: https://FAS1002.github.io/A22
-    # changer pour votre propre orcid id
-    # https://orcid.org/ pour vous inscrire.
-    orcid: 0000-0000-0000-0000
-
-# TRUE == Générer une citation pour cette page précise. Pour enlever, mettre false.
-citation: true
-# Inclure les références que vous utilisez dans vos rapports. Je conseille Zotero pour construire
-# ce fichier ou de connecter RStudio directement pour pouvoir citer avec @nom-de-reference.
+    orcid: 0000-0001-8128-783X
+citation: false
 bibliography: references.bib
 ---
 
@@ -64,7 +53,4 @@ unzip(zipfile = fpath,
       exdir = base_path)
 
 
-```
-
-```{}
 ```
