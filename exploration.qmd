@@ -1,47 +1,99 @@
 ---
-title: "Titre de votre page d'exploration"
+title: "Exploration des données"
 title-block-banner: false
 description: | 
-  Petite description de cette page.
-# à changer
-date: "2022-12-21"
-# Modifier les détails que vous voulez
+  Analyse descriptive des banques de données importées
+date: "2022-12-20"
 author:
-  - name: "Prénom Nom"
-    # Votre site web perso ou github
+  - name: "Juliana Hubacova"
     url: https://github.com/VOTREUSERNAME
-    # les champs d'affiliation sont optionnels, vous pouvez les
-    # comment out en ajoutant un # devant.
     affiliation: FAS1002
     affiliation-url: https://FAS1002.github.io/A22
-    # changer pour votre propre orcid id
-    # https://orcid.org/ pour vous inscrire.
-    orcid: 0000-0000-0000-0000
-
-# TRUE == Générer une citation pour cette page précise. Pour enlever, mettre false.
+    orcid: 0000-0001-8128-783X
 citation: true
-# Inclure les références que vous utilisez dans vos rapports. Je conseille Zotero pour construire
-# ce fichier ou de connecter RStudio directement pour pouvoir citer avec @nom-de-reference.
 bibliography: references.bib
 format :
     html : 
         df-print: kable
 ---
 
-## Un peu d'interactivité pour le plaisir!
+# Library
 
-```{r map}
-library(leaflet)
-leaflet() %>%
-    setView(lng=150,
-            lat=-30,
-            zoom = 3) %>%
-    addTiles() %>%
-    addMarkers(lng=174.768,
-               lat=-36.852,
-               popup="Là où R est né") %>%
-    addProviderTiles(providers$Esri.WorldGrayCanvas)
+```{r echo = false}
+library(tidyverse)
+library(countrycode)
+library(ggplot2)
 ```
+
+# Re-importation
+
+```{r echo=false}
+co_2_data = read.csv('~/Desktop/Automne 2022/FAS1002/FAS1002_Projet_brouillon/owid-co2-data.csv')
+life_exp = read.csv("~/Desktop/Automne 2022/FAS1002/FAS1002_Projet_brouillon/countries.csv")
+```
+
+## Analyse descriptive
+
+1.  Banque de données sur les émissions des CO2 et les gaz à effet de serre.
+
+```{r co2, message=false, warning= false}
+# Choix de variables 
+co_2_data2 = co_2_data %>% 
+  select(country, year, population, gdp, ends_with("per_capita"), primary_energy_consumption, total_ghg) %>% 
+  mutate(continent = countrycode(co_2_data$iso_code, "iso3c", "continent"))
+
+# Variables manquantes 
+co_2_data2 %>% 
+  select(country, continent) %>% 
+  filter(!complete.cases(.))
+
+# Retrait des continents dans la colonne des pays 
+co_2_data3 = co_2_data2 %>% 
+  drop_na(continent)
+co_2_data3 = as_tibble(co_2_data3)
+
+# Ajout de la variable du PIB par habitant
+co_2_data4 = co_2_data3 %>% 
+    mutate(gdp_per_capita = gdp/population)
+
+# Moyenne du PIB/habitant par pays
+co_2_data5 = co_2_data4 %>% 
+    group_by(country) %>% 
+    summarise(gdp_per_capita = mean(gdp_per_capita, na.rm = TRUE)) %>% 
+    ungroup() 
+co_2_data5
+
+# Les pays ayant un PIB par habitant faible
+co_2_data5 %>% 
+    arrange(gdp_per_capita)
+
+#Les pays ayant un PIB par habitant élevé
+co_2_data5 %>% 
+    arrange(- gdp_per_capita)
+```
+
+On constate que les pays avec le plus faible PIB par habitant sont le Burundi, la Guinée, le Malawi et l'Éthiopie. Ces pays font partie des pays qu'on considère comme sou-développé. Tandis que les pays les plus développé économiquement connaissent un PIB par habitant plus élevé.Le pays avec un PIB par habitant le plus élevé est le Qatar avec un montant de 60 018 USD. 
+
+Qu'en est-il d'un point de vue des continents? 
+```{r}
+# Moyenne du PIB par habitant par continent
+co_2_data6 = co_2_data3 %>% 
+    group_by(continent) %>% 
+    summarise(gdp = mean(gdp, na.rm = TRUE)) %>% 
+    ungroup() %>% 
+    rename("gdp_usd_2011" = "gdp") %>% 
+    arrange(gdp_usd_2011)
+
+ggplot(data = co_2_data6, aes(x = continent, y = gdp_usd_2011)) +
+    geom_bar(stat = "identity") + 
+    labs(title = "PIB par habitant en fonction des continents", 
+         subtitle = "À partir des données de Our WOrld in Data", 
+         x = "Continents", 
+         y = "PIB par habitant") +
+    scale_x_discrete(limits = c("Asia", "Americas", "Europe", "Oceania", "Africa"))
+```
+
+
 
 ## Peut-être que ça vous inspirera!
 
