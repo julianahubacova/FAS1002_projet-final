@@ -110,35 +110,36 @@ On constate que l'Asie et l'Amérique sont les continents ayant le PIB par habit
 
 Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions. 
 
-```{r}
+```{r message=FALSE, warning=false}
 # base de données 
 glimpse(life_exp_country)
 
-# Continents
-unique(life_exp_country$name)
-unique(life_exp_country$geo)
+# Changement de nom de variables (en lien avec la base de données CO2)
 life_exp_country2 = life_exp_country %>% 
+    rename("country" = "name") %>% 
+    rename("year" = "time") %>% 
+    rename("lifeexp" = "Life expectancy")
+
+# Continents
+unique(life_exp_country2$country)
+unique(life_exp_country2$geo)
+life_exp_country3 = life_exp_country2 %>% 
     mutate(continent = countrycode(life_exp_country$geo, "genc3c", "continent"))
-unique(life_exp2$continent)
+unique(life_exp_country3$continent)
 ```
  
 La base de données *Life Expectancy at Birth* contient 56 616 observations et 4 variables. On y retrouve les pays, leur code genc3c (GENC à 3 lettres), les années et leur espérance de vie.
 On constate qu'il n'y a pas de données pour l'Océanie.
 
 ```{r}
-# Changement de nom de variables (en lien avec la base de données CO2)
-life_exp_country3 = life_exp_country2 %>% 
-    rename("country" = "name") %>% 
-    rename("year" = "time") %>% 
-    rename("lifeexp" = "Life expectancy")
-
 # Utilisation de le feuille de calcul sur les continents
 life_exp_continent2 = life_exp_continent %>% 
     rename("continent" = "name") %>% 
     rename("year" = "time") %>% 
     rename("lifeexp" = "Life.expectancy")
 
-ggplot(data = life_exp_continent2, aes(x = year, y = lifeexp, group = continent, color = continent)) +
+ggplot(data = life_exp_continent2, 
+       mapping = aes(x = year, y = lifeexp, group = continent, color = continent)) +
     geom_line() +
     geom_vline(xintercept =year(Sys.time()), colour = "black", alpha = .6, linetype = "dashed") +
     annotate("text", x = year(Sys.time()), y = 50, label = "Cette année", size = 3, color = "black", alpha = .6) +
@@ -151,6 +152,47 @@ ggplot(data = life_exp_continent2, aes(x = year, y = lifeexp, group = continent,
 ```
 
 On constate que l'espérance de vie a augmenté au cours des années. Ceci peut notamment être dû à des avancées médicales, des meilleures conditions de vie et d'hygiène. De plus, on peut observer que l'espérance de vie à la naissance la plus élevée se trouve en Europe, suivie de l'Amérique. L'Afrique se trouve au bas de l'échelle. À nouveau, l'Afrique qui se compose des pays en développement se trouve en dernière position du classement. Existe-t-il une relation entre le PIB par habitant et l'espérance de vie à la naissance?
+
+## Lien entre PIB par habitant et espérance de vie à la naissance
+
+```{r}
+# Combinaison des deux bases de données
+co2_life_exp = merge(co_2_data4, life_exp_country2, by = c("country", "year"))
+
+# Données manquantes pour le PIB
+missing_gdp = co2_life_exp %>% 
+  select(country, gdp, year) %>% 
+  filter(!complete.cases(.))
+# La plus grande différence entre le manque de donnée
+a = table(missing_gdp$year)
+unclass(a)
+number_missing = tibble(a)
+number_missing = number_missing %>% 
+    mutate(diff = a - lag(a))
+max(number_missing, na.rm = TRUE)
+```
+
+La plus grande différence de donnée manquante se trouve entre 1949 et 1950. L'analyse va donc se faire à partir de 1950, où un grand nombre de données sont disponibles comparé aux années précédentes. 
+
+```{r}
+# À partir de 1950
+co2_life_exp2 = co2_life_exp %>% 
+    filter(year >1949)
+
+# Graphiquement
+plot_ly(data = co2_life_exp2, x = ~gdp_per_capita, y = ~lifeexp, color = ~continent, frame = ~year)
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
