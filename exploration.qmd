@@ -17,19 +17,15 @@ format :
         df-print: kable
 ---
 
-# Library
-
 ```{r echo = false}
 library(tidyverse)
 library(countrycode)
 library(ggplot2)
 ```
 
-# Re-importation
-
 ```{r echo=false}
 co_2_data = read.csv('~/Desktop/Automne 2022/FAS1002/FAS1002_Projet_brouillon/owid-co2-data.csv')
-life_exp = read.csv("~/Desktop/Automne 2022/FAS1002/FAS1002_Projet_brouillon/countries.csv")
+life_exp = read.csv("~/Desktop/Automne 2022/FAS1002/FAS1002_Projet_brouillon/bycontinents.csv")
 ```
 
 ## Analyse descriptive
@@ -43,7 +39,7 @@ co_2_data2 = co_2_data %>%
   mutate(continent = countrycode(co_2_data$iso_code, "iso3c", "continent"))
 
 # Variables manquantes 
-co_2_data2 %>% 
+missing = co_2_data2 %>% 
   select(country, continent) %>% 
   filter(!complete.cases(.))
 
@@ -60,8 +56,7 @@ co_2_data4 = co_2_data3 %>%
 co_2_data5 = co_2_data4 %>% 
     group_by(country) %>% 
     summarise(gdp_per_capita = mean(gdp_per_capita, na.rm = TRUE)) %>% 
-    ungroup() 
-co_2_data5
+    ungroup()
 
 # Les pays ayant un PIB par habitant faible
 co_2_data5 %>% 
@@ -72,9 +67,10 @@ co_2_data5 %>%
     arrange(- gdp_per_capita)
 ```
 
-On constate que les pays avec le plus faible PIB par habitant sont le Burundi, la Guinée, le Malawi et l'Éthiopie. Ces pays font partie des pays qu'on considère comme sou-développé. Tandis que les pays les plus développé économiquement connaissent un PIB par habitant plus élevé.Le pays avec un PIB par habitant le plus élevé est le Qatar avec un montant de 60 018 USD. 
+On constate que les pays avec le plus faible PIB par habitant sont le Burundi, la Guinée, le Malawi et l'Éthiopie. Ces pays font partie des pays qu'on considère comme sou-développé. Tandis que les pays les plus développé économiquement connaissent un PIB par habitant plus élevé.Le pays avec un PIB par habitant le plus élevé est le Qatar avec un montant de 60 018 USD.
 
-Qu'en est-il d'un point de vue des continents? 
+Qu'en est-il d'un point de vue des continents?
+
 ```{r}
 # Moyenne du PIB par habitant par continent
 co_2_data6 = co_2_data3 %>% 
@@ -87,13 +83,34 @@ co_2_data6 = co_2_data3 %>%
 ggplot(data = co_2_data6, aes(x = continent, y = gdp_usd_2011)) +
     geom_bar(stat = "identity") + 
     labs(title = "PIB par habitant en fonction des continents", 
-         subtitle = "À partir des données de Our WOrld in Data", 
+         subtitle = "À partir des données de Our World in Data", 
          x = "Continents", 
          y = "PIB par habitant") +
     scale_x_discrete(limits = c("Asia", "Americas", "Europe", "Oceania", "Africa"))
 ```
 
+2.  Banque de donnée sur l'espérance de vie à la naissance.
 
+```{r}
+# Changement de nom de variables (en lien avec la base de données CO2)
+life_exp2 = life_exp %>% 
+    rename("continent" = "name") %>% 
+    rename("year" = "time") %>% 
+    rename("lifeexp" = "Life.expectancy")
+
+ggplot(data = life_exp2, aes(x = year, y = lifeexp, group = continent, color = continent)) +
+    geom_line() +
+    geom_vline(xintercept =year(Sys.time()), colour = "black", alpha = .6, linetype = "dashed") +
+    annotate("text", x = year(Sys.time()), y = 50, label = "Cette année", size = 3, color = "black", alpha = .6) +
+    labs(title = "Évolution de l'espérance de vie à la naissance", 
+         subtitle = "À partir des données de Gapminder",
+         x = "Années", 
+         y = "Espérance de vie à la naissance") +
+    scale_fill_discrete(name = "Continent", labels = c("Afrique", "Asie", "Europe", "Amérique"))
+
+```
+
+évolution de l'espérance de vie à la naissance en focnction des continents
 
 ## Peut-être que ça vous inspirera!
 
