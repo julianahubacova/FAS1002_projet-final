@@ -80,13 +80,15 @@ co_2_data6 = co_2_data3 %>%
     rename("gdp_usd_2011" = "gdp") %>% 
     arrange(gdp_usd_2011)
 
-ggplot(data = co_2_data6, aes(x = continent, y = gdp_usd_2011)) +
+ggplot(data = co_2_data6, 
+       mapping = aes(x = continent, y = gdp_usd_2011)) +
     geom_bar(stat = "identity") + 
     labs(title = "PIB par habitant en fonction des continents", 
          subtitle = "À partir des données de Our World in Data", 
          x = "Continents", 
          y = "PIB par habitant") +
-    scale_x_discrete(limits = c("Asia", "Americas", "Europe", "Oceania", "Africa"))
+    scale_x_discrete(limits = c("Asia", "Americas", "Europe", "Oceania", "Africa")) +
+    theme_bw()
 ```
 
 2.  Banque de donnée sur l'espérance de vie à la naissance.
@@ -106,11 +108,13 @@ ggplot(data = life_exp2, aes(x = year, y = lifeexp, group = continent, color = c
          subtitle = "À partir des données de Gapminder",
          x = "Années", 
          y = "Espérance de vie à la naissance") +
-    scale_fill_discrete(name = "Continent", labels = c("Afrique", "Asie", "Europe", "Amérique"))
-
+    scale_color_discrete(name = "Continent", labels = c("Afrique", "Asie", "Europe", "Amérique")) +
+    theme_bw()
 ```
 
-évolution de l'espérance de vie à la naissance en focnction des continents
+On constate que l'espérance de vie a augmenté au cours des années. Ceci peut notamment être dû à des avancées médicales, des meilleures conditions de vie et d'hygiène. Je voudrais maintenant me focaliser sur le lien entre le 
+
+Les 
 
 ## Peut-être que ça vous inspirera!
 
