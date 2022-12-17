@@ -37,14 +37,14 @@ life_exp_country = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_Projet_bro
 
 1.  Banque de données sur les émissions des CO2 et les gaz à effet de serre.
 
-Cette banque de données contient de nombreuses informations sur les pays depuis 1850. Elle contient 46 523 observations et 74 variables. On y retrouve les pays, leur population, leur PIB, et leurs émissions de dioxyde de carbone et gaz à effets de serre. 
+Cette banque de données contient de nombreuses informations sur les pays depuis 1850. Elle contient 46 523 observations et 74 variables. On y retrouve les pays, leur population, leur PIB, et leurs émissions de dioxyde de carbone et gaz à effets de serre.
 
 ```{r}
 # base de données
 glimpse(co_2_data)
 ```
 
-À première vue, on peut constater les différents facteurs qui influents les émissions de dioxyde de carbone et des gaz à effets de serre. On retrouve notamment l'utilisation du ciment, du charbon, du gaz, du méthane, du nitrate, de la combustion, et autres. Ces variables vont être utiliser plus tard dans l'analyse. J'aimerais d'abord me concentrer sur le PIB des pays et des continents car cette variable nous permet de constater la santé économque d'un pays. 
+À première vue, on peut constater les différents facteurs qui influents les émissions de dioxyde de carbone et des gaz à effets de serre. On retrouve notamment l'utilisation du ciment, du charbon, du gaz, du méthane, du nitrate, de la combustion, et autres. Ces variables vont être utiliser plus tard dans l'analyse. J'aimerais d'abord me concentrer sur le PIB des pays et des continents car cette variable nous permet de constater la santé économque d'un pays.
 
 ```{r co2, message=false, warning= false}
 # Choix de variables et ajout de continents
@@ -81,8 +81,7 @@ co_2_data5 %>%
     arrange(- gdp_per_capita)
 ```
 
-On constate que les pays avec le plus faible PIB par habitant sont le Burundi, la Guinée, le Malawi et l'Éthiopie. Ces pays font partie des pays qu'on considère comme sous-développé. Tandis que les pays les plus développé économiquement connaissent un PIB par habitant plus élevé. Le pays avec un PIB par habitant le plus élevé est le Qatar avec un montant de 60 018 USD (dollars constants de 2011).
-Mais qu'en est-il d'un point de vue des continents?
+On constate que les pays avec le plus faible PIB par habitant sont le Burundi, la Guinée, le Malawi et l'Éthiopie. Ces pays font partie des pays qu'on considère comme sous-développé. Tandis que les pays les plus développé économiquement connaissent un PIB par habitant plus élevé. Le pays avec un PIB par habitant le plus élevé est le Qatar avec un montant de 60 018 USD (dollars constants de 2011). Mais qu'en est-il d'un point de vue des continents?
 
 ```{r}
 # Moyenne du PIB par habitant par continent
@@ -95,7 +94,7 @@ co_2_data6 = co_2_data3 %>%
 
 ggplot(data = co_2_data6, 
        mapping = aes(x = continent, y = gdp_usd_2011)) +
-    geom_bar(stat = "identity", fill = "#C5D8E1") + 
+    geom_bar(stat = "identity", fill = "#77B5FE") + 
     labs(title = "PIB par habitant en fonction des continents", 
          subtitle = "À partir des données de Our World in Data", 
          x = "Continents", 
@@ -104,11 +103,11 @@ ggplot(data = co_2_data6,
     theme_bw()
 ```
 
-On constate que l'Asie et l'Amérique sont les continents ayant le PIB par habitant le plus élevé. Tandis que l'Afrique se retrouve avec le PIB par habitant le moins élevé. Ceci n'est pas surprenant puisque les pays en développement se trouve majoritairement en Afrique et les grandes puissances économiques, Chine et États-Unis, se trouvent respectivement en Asie et en Amérique. 
+On constate que l'Asie et l'Amérique sont les continents ayant le PIB par habitant le plus élevé. Tandis que l'Afrique se retrouve avec le PIB par habitant le moins élevé. Ceci n'est pas surprenant puisque les pays en développement se trouve majoritairement en Afrique et les grandes puissances économiques, Chine et États-Unis, se trouvent respectivement en Asie et en Amérique.
 
 2.  Banque de donnée sur l'espérance de vie à la naissance.
 
-Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions. 
+Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions.
 
 ```{r message=FALSE, warning=false}
 # base de données 
@@ -127,9 +126,8 @@ life_exp_country3 = life_exp_country2 %>%
     mutate(continent = countrycode(life_exp_country$geo, "genc3c", "continent"))
 unique(life_exp_country3$continent)
 ```
- 
-La base de données *Life Expectancy at Birth* contient 56 616 observations et 4 variables. On y retrouve les pays, leur code genc3c (GENC à 3 lettres), les années et leur espérance de vie.
-On constate qu'il n'y a pas de données pour l'Océanie.
+
+La base de données *Life Expectancy at Birth* contient 56 616 observations et 4 variables. On y retrouve les pays, leur code genc3c (GENC à 3 lettres), les années et leur espérance de vie. On constate qu'il n'y a pas de données pour l'Océanie.
 
 ```{r}
 # Utilisation de le feuille de calcul sur les continents
@@ -172,13 +170,31 @@ number_missing = number_missing %>%
 max(number_missing, na.rm = TRUE)
 ```
 
-La plus grande différence de donnée manquante se trouve entre 1949 et 1950. L'analyse va donc se faire à partir de 1950, où un grand nombre de données sont disponibles comparé aux années précédentes. 
+La plus grande différence de donnée manquante se trouve entre 1949 et 1950. L'analyse va donc se faire à partir de 1950, où un grand nombre de données sont disponibles comparé aux années précédentes.
 
 ```{r}
 # À partir de 1950
 co2_life_exp2 = co2_life_exp %>% 
     filter(year >1949)
+co2_life_exp2_continent = co2_life_exp2 %>% 
+    group_by(continent, year) %>% 
+    summarise(across(c(gdp_per_capita, lifeexp), mean, na.rm = TRUE))
 
-# Graphiquement
-plot_ly(data = co2_life_exp2, x = ~gdp_per_capita, y = ~lifeexp, color = ~continent, frame = ~year)
+# Graphique
+plot_ly(data = co2_life_exp2, x = ~gdp_per_capita, y = ~lifeexp, type = 'scatter', color = ~continent, frame = ~year, size = ~population, text = ~country, mode = 'markers',width = "100%", height = 500) %>% 
+    layout(legend = list(title= list(text = 'Continent')),
+         xaxis = list(title = 'PIB par habitant',
+                      zerolinecolor = "#ffff",
+                      gridcolor = "ffff",
+                      zerolinewidth = 2),
+         yaxis = list(title = 'Espérance de vie à la naissance',
+                      zerolinecolor = "#ffff",
+                      gridcolor = "ffff",
+                      zerolinewidth = 2),
+         plot_bgcolor='#e5ecf6')
 ```
+
+On constate que l'espérance de vie à la naissance et le PIB par habitant on une relation positive. Quand l'espérance de vie à la naissance est élevé, le PIB est élevé. Quand l'espérance de vie à la naissance est basse, le PIB par habitant est bas. Une espérance de vie à la naissance élevée implique de bonnes conditions de vie au sein du pays. Ainsi, une population en bonne santé sera davantage productive. Il n'est donc pas surprenant que les continent Europe et Amérique ont un PIB par habitant plus élevé que celui de l'Afrique où l'espérance de vie à la naissance est basse. 
+
+
+
