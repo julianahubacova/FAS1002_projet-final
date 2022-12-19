@@ -23,12 +23,14 @@ library(tidyverse)
 library(countrycode)
 library(ggplot2)
 library(plotly)
+library(lubridate)
 ```
 
-```{r echo=false}
-co_2_data = read.csv('~/Desktop/Automne 2022/FAS1002/FAS1002_Projet_brouillon/owid-co2-data.csv')
-life_exp_continent = read.csv("~/Desktop/Automne 2022/FAS1002/FAS1002_Projet_brouillon/bycontinents.csv")
-life_exp_country = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_Projet_brouillon/Copie de _GM-Life Expectancy- Dataset - v12.xlsx", 
+```{r echo=FALSE}
+co_2_data = read.csv('~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/owid-co2-data.csv')
+life_exp_continent = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx",
+                              sheet = "data-for-regions-by-year")
+life_exp_country = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx", 
     sheet = "data-for-countries-etc-by-year")
 
 ```
@@ -46,7 +48,7 @@ glimpse(co_2_data)
 
 À première vue, on peut constater les différents facteurs qui influents les émissions de dioxyde de carbone et des gaz à effets de serre. On retrouve notamment l'utilisation du ciment, du charbon, du gaz, du méthane, du nitrate, de la combustion, et autres. Ces variables vont être utiliser plus tard dans l'analyse. J'aimerais d'abord me concentrer sur le PIB des pays et des continents car cette variable nous permet de constater la santé économque d'un pays.
 
-```{r co2, message=false, warning= false}
+```{r co2, message=FALSE, warning= FALSE}
 # Choix de variables et ajout de continents
 co_2_data2 = co_2_data %>% 
   select(country, year, population, gdp, ends_with("per_capita"), primary_energy_consumption, total_ghg) %>% 
@@ -109,7 +111,7 @@ On constate que l'Asie et l'Amérique sont les continents ayant le PIB par habit
 
 Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions.
 
-```{r message=FALSE, warning=false}
+```{r message=FALSE, warning=FALSE}
 # base de données 
 glimpse(life_exp_country)
 
