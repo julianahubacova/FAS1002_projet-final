@@ -6,7 +6,7 @@ description: |
 date: "2022-12-20"
 author:
   - name: "Juliana Hubacova"
-    url: https://github.com/VOTREUSERNAME
+    url: https://github.com/julianahubacova
     affiliation: FAS1002
     affiliation-url: https://FAS1002.github.io/A22
     orcid: 0000-0001-8128-783X
@@ -203,6 +203,7 @@ Jusqu'ici, nous avons constaté que le développement économique du pays est li
 
 ```{r message=FALSE, warning=FALSE}
 # Comparaison entre l'Amérique et l'Afrique
+
 #co2_life_exp2_am_af = co2_life_exp2 %>% 
 # filter(continent == "Americas"| continent == "Africa") %>% 
 # group_by(continent, year) %>% 

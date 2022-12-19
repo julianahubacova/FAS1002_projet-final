@@ -10,47 +10,37 @@ author:
     affiliation: FAS1002
     affiliation-url: https://FAS1002.github.io/A22
     orcid: 0000-0001-8128-783X
-citation: false
+citation: true
 bibliography: references.bib
 ---
 
-Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l'importation et la manipulation des données.
+Ce projet se concentre sur deux banques de données distinctes :
 
-Je vous conseille d'écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d'éviter de réécrire cette page plusieurs fois.
+-   **CO2 and Greenhouse Gas Emissions** : base de données sur les émissions de CO2 et de gaz à effet de serre. Mise à jour régulièrement par @owidco2.
 
-::: callout-important
-N'oubliez pas d'inclure vos références sur chacune des pages!
-:::
+    Les données sont disponibles :
 
-Par exemple:
+    URL : https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions
 
-> Les données proviennent entre autres de @owidenergy.
+    Github : https://github.com/owid/co2-data
 
-@owidenergy
+-   **Life Expectancy At Birth** : base de données sur l'espérance de vie à la naissance. Mise à jour régulièrement par @Gapminder. Les données sont disponibles :
+
+    URL : https://www.gapminder.org/data/documentation/gd004/
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(fs)
-library(lubridate)
 library(tidyverse)
 library(skimr)
+library(lubridate)
+library(readxl)
 ```
 
 ```{r download, cache = TRUE}
-URL <- "https://github.com/FAS1002/A22/raw/main/assets/fichiers/olympic_archive.zip"
-
-base_path <- path("data", "raw")
-fname <- paste0(today(),"olympic_archive.zip",
-                sep = "_")
-
-fname
-fpath <- path(base_path, fname)
-
-fpath
-download.file(url =URL, destfile = fpath)
-
-# extraction
-unzip(zipfile = fpath, 
-      exdir = base_path)
-
+co_2_data = read.csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/owid-co2-data.csv")
+life_exp_continent = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx",
+                              sheet = "data-for-regions-by-year")
+life_exp_country = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx", 
+    sheet = "data-for-countries-etc-by-year")
 
 ```
