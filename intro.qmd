@@ -30,6 +30,7 @@ library(ggplot2)
 library(plotly)
 library(lubridate)
 library(patchwork)
+library(corrplot)
 ```
 
 ```{r echo=FALSE, message = FALSE, warning= FALSE}
@@ -143,6 +144,21 @@ p2+p3
 
 ```
 
+On peut constater une éventuelle relation négative entre les émissions des gaz à effet de serre et l'espérance de vie. Avant de se prononcer, jetons un coup d'oeil sur le coefficient de corrélation. 
+
+```{r}
+# Matrice de corrélation, méthode pearson
+co2_life_exp1990num =co2_life_exp_continent1990 %>% 
+    mutate(gdp_per_capita = as.numeric(gdp_per_capita),
+           lifeexp = as.numeric(lifeexp),
+           total_ghg = as.numeric(total_ghg))
+mcor = cor(co2_life_exp1990num[3:5], method = "pearson", use = "complete.obs")
+mcor
+
+# Corrélogramme
+corrplot(mcor, type="upper", order="hclust", tl.col="black", tl.srt=45)
+
+```
 
 
 
