@@ -1,0 +1,14 @@
+{
+  "hash": "bbceb33894fbdd903d19200fd276b8a0",
+  "result": {
+    "markdown": "---\ntitle: \"Titre de votre page d'importation\"\ntitle-block-banner: false\ndescription: | \n  Petite description de cette page.\n# à changer\ndate: \"2022-12-21\"\n# Modifier les détails que vous voulez\nauthor:\n  - name: \"Prénom Nom\"\n    # Votre site web perso ou github\n    url: https://github.com/VOTREUSERNAME\n    # les champs d'affiliation sont optionnels, vous pouvez les\n    # comment out en ajoutant un # devant.\n    affiliation: FAS1002\n    affiliation-url: https://FAS1002.github.io/A22\n    # changer pour votre propre orcid id\n    # https://orcid.org/ pour vous inscrire.\n    orcid: 0000-0000-0000-0000\n\n# TRUE == Générer une citation pour cette page précise. Pour enlever, mettre false.\ncitation: true\n# Inclure les références que vous utilisez dans vos rapports. Je conseille Zotero pour construire\n# ce fichier ou de connecter RStudio directement pour pouvoir citer avec @nom-de-reference.\nbibliography: references.bib\n---\n\n\nIl est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l'importation et la manipulation des données.\n\nJe vous conseille d'écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d'éviter de réécrire cette page plusieurs fois.\n\n::: callout-important\nN'oubliez pas d'inclure vos références sur chacune des pages!\n:::\n\nPar exemple:\n\n> Les données proviennent entre autres de @owidenergy.\n\n@owidenergy\n\n\n::: {.cell}\n\n:::\n\n::: {.cell hash='import_cache/html/download_02e6e1fbfa76612c213ead0adc4ad42f'}\n\n```{.r .cell-code}\nURL <- \"https://github.com/FAS1002/A22/raw/main/assets/fichiers/olympic_archive.zip\"\n\nbase_path <- path(\"data\", \"raw\")\nfname <- paste0(today(),\"olympic_archive.zip\",\n                sep = \"_\")\n\nfname\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] \"2022-11-29olympic_archive.zip_\"\n```\n:::\n\n```{.r .cell-code}\nfpath <- path(base_path, fname)\n\nfpath\n```\n\n::: {.cell-output .cell-output-stdout}\n```\ndata/raw/2022-11-29olympic_archive.zip_\n```\n:::\n\n```{.r .cell-code}\ndownload.file(url =URL, destfile = fpath)\n\n# extraction\nunzip(zipfile = fpath, \n      exdir = base_path)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\nWarning in unzip(zipfile = fpath, exdir = base_path): error -1 in extracting\nfrom zip file\n```\n:::\n:::\n\n\n```{}\n```\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
