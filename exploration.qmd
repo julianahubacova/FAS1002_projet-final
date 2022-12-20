@@ -254,4 +254,3 @@ jours
 # Enregistrement de la banque de donnée modifiée
 write_csv(life_exp_continent, file = "data/processed/life_exp_continent.csv")
 ```
-
