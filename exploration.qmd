@@ -24,19 +24,19 @@ library(countrycode)
 library(ggplot2)
 library(plotly)
 library(lubridate)
+library(patchwork)
 ```
 
 ```{r echo=FALSE, message = FALSE, warning= FALSE}
-co_2_data = read.csv('~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/owid-co2-data.csv')
-life_exp_continent = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx",
-                              sheet = "data-for-regions-by-year")
-life_exp_country = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx", 
-    sheet = "data-for-countries-etc-by-year")
+co_2_data = read_csv('~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/2022-12-19_owid-co2-data.csv')
+life_exp_continent = read_csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/2022-12-19_gapm.csv")
+# life_exp_country = read_excel("~/Desktop/Automne #2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx", 
+#    sheet = "data-for-countries-etc-by-year")
 ```
 
 ## Analyse descriptive
 
-1.  Banque de données sur les émissions des CO2 et les gaz à effet de serre.
+##### Banque de données sur les émissions des CO2 et les gaz à effet de serre.
 
 Cette banque de données contient de nombreuses informations sur les pays depuis 1850. Elle contient 46 523 observations et 74 variables. On y retrouve les pays, leur population, leur PIB, et leurs émissions de dioxyde de carbone et gaz à effets de serre.
 
@@ -45,12 +45,14 @@ Cette banque de données contient de nombreuses informations sur les pays depuis
 glimpse(co_2_data)
 ```
 
-À première vue, on peut constater les différents facteurs qui influents les émissions de dioxyde de carbone et des gaz à effets de serre. On retrouve notamment l'utilisation du ciment, du charbon, du gaz, du méthane, du nitrate, de la combustion, et autres. Ces variables vont être utiliser plus tard dans l'analyse. J'aimerais d'abord me concentrer sur le PIB des pays et des continents car cette variable nous permet de constater la santé économque d'un pays.
+1.  Le PIB
 
-```{r co2, message=FALSE, warning= FALSE}
+À première vue, on peut constater les différents facteurs qui influents les émissions de dioxyde de carbone et des gaz à effets de serre. On retrouve notamment l'utilisation du ciment, du charbon, du gaz, du méthane, du nitrate, de la combustion, et autres. Ces variables vont être utiliser plus tard dans l'analyse. J'aimerais d'abord me concentrer sur le PIB des pays et des continents car cette variable nous permet de constater la santé économique du pays.
+
+```{r message=FALSE, warning= FALSE}
 # Choix de variables et ajout de continents
 co_2_data2 = co_2_data %>% 
-  select(country, year, population, gdp, ends_with("per_capita"), primary_energy_consumption, total_ghg) %>% 
+  select(country, year, population, gdp, ends_with("per_capita"), primary_energy_consumption, total_ghg)%>%
   mutate(continent = countrycode(co_2_data$iso_code, "iso3c", "continent"))
 
 # Variables manquantes 
@@ -63,12 +65,36 @@ co_2_data3 = co_2_data2 %>%
   drop_na(continent)
 co_2_data3 = as_tibble(co_2_data3)
 
-# Ajout de la variable du PIB par habitant
+# Évolution du PIB au fil du temps entre les continents
 co_2_data4 = co_2_data3 %>% 
+    group_by(continent, year) %>% 
+    summarise(gdp = mean(gdp, na.rm = TRUE)) %>% 
+    arrange(gdp)
+
+ggplot(co_2_data4, 
+       mapping = aes(x = year, y = gdp, color = continent)) +
+    geom_line()+
+    scale_x_continuous(limits = c(1820,2021))+
+    labs(title = "Évolution du PIB au fil des années", 
+         subtitle = "À partir des données Our World in Data", 
+         x = "Années", 
+         y = "PIB (dollars constants de 2011") +
+    theme_classic()
+```
+
+On constate que le PIB a évolué positivement au cours des années pour tous les continents. On voit une croissance considérable pour tous les continents excepté pour l'Afrique où la croissance du PIB est plus lente. L'augmentation soudaine du PIB est dû à la révolution industrielle dans les années 1950. Celle-ci a permis le passage d'une économie agraire vers une économie industrielle avec de nouvelles technologies plus productives. Le graphique nous indique également que l'Amérique a connu une dominance économique jusque dans les années 2000 où l'Asie a pris le dessus.
+
+2.  PIB par habitant
+
+Le PIB est une bonne mesure économique mais qu'en est-il du PIB par habitant et comment se compare-t-il au PIB?
+
+```{r}
+# Ajout de la variable du PIB par habitant
+co_2_data_pib_per_cap = co_2_data3 %>% 
     mutate(gdp_per_capita = gdp/population)
 
 # Moyenne du PIB/habitant par pays
-co_2_data5 = co_2_data4 %>% 
+co_2_data5 = co_2_data_pib_per_cap %>% 
     group_by(country) %>% 
     summarise(gdp_per_capita = mean(gdp_per_capita, na.rm = TRUE)) %>% 
     ungroup()
@@ -88,15 +114,14 @@ On constate que les pays avec le plus faible PIB par habitant sont le Burundi, l
 
 ```{r message= FALSE, warning= FALSE}
 # Moyenne du PIB par habitant par continent
-co_2_data6 = co_2_data3 %>% 
+co_2_data6 = co_2_data_pib_per_cap %>% 
     group_by(continent) %>% 
-    summarise(gdp = mean(gdp, na.rm = TRUE)) %>% 
-    ungroup() %>% 
-    rename("gdp_usd_2011" = "gdp") %>% 
-    arrange(gdp_usd_2011)
+    summarise(gdp_per_capita = mean(gdp_per_capita, na.rm = TRUE)) %>% 
+    ungroup() %>%
+    arrange(gdp_per_capita)
 
-ggplot(data = co_2_data6, 
-       mapping = aes(x = continent, y = gdp_usd_2011)) +
+p1 = ggplot(data = co_2_data6, 
+       mapping = aes(x = continent, y = gdp_per_capita)) +
     geom_bar(stat = "identity", fill = "#77B5FE") + 
     labs(title = "PIB par habitant en fonction des continents", 
          subtitle = "À partir des données de Our World in Data", 
@@ -104,30 +129,48 @@ ggplot(data = co_2_data6,
          y = "PIB par habitant") +
     scale_x_discrete(limits = c("Asia", "Americas", "Europe", "Oceania", "Africa")) +
     theme_bw()
+
+# Moyenne du PIB par continent
+co_2_data7 = co_2_data_pib_per_cap %>% 
+    group_by(continent) %>% 
+    summarise(gdp = mean(gdp, na.rm = TRUE)) %>% 
+    ungroup() %>%
+    arrange(gdp)
+
+p2 = ggplot(data = co_2_data7, 
+       mapping = aes(x = continent, y = gdp)) +
+    geom_bar(stat = "identity", fill = "#77B5FE") + 
+    labs(title = "PIB en fonction des continents", 
+         subtitle = "À partir des données de Our World in Data", 
+         x = "Continents", 
+         y = "PIB") +
+    scale_x_discrete(limits = c("Asia", "Americas", "Europe", "Oceania", "Africa")) +
+    theme_bw()
+p2+p1
 ```
 
-On constate que l'Asie et l'Amérique sont les continents ayant le PIB par habitant le plus élevé. Tandis que l'Afrique se retrouve avec le PIB par habitant le moins élevé. Ceci n'est pas surprenant puisque les pays en développement se trouve majoritairement en Afrique et les grandes puissances économiques, Chine et États-Unis, se trouvent respectivement en Asie et en Amérique.
+On constate que l'Asie et l'Amérique sont les continents ayant le PIB le plus élevé. Tandis que l'Afrique se retrouve avec le PIB le moins élevé. Ceci n'est pas surprenant puisque les pays en développement se trouve majoritairement en Afrique et les grandes puissances économiques, Chine et États-Unis, se trouvent respectivement en Asie et en Amérique. Par contre, lorsqu'on compare le PIB par habitant entre les différents continents on constate une différence dans le classement. C'est l'Océanie et l'Europe qui se trouve au top du classement, tandis que l'Afrique se trouve à nouveau en dernière position. Le PIB par habitant prend en considération à la fois la population et le PIB du pays. Ainsi, cette mesure nous sera plus utile pour la suite de notre analyse.
 
-2.  Banque de donnée sur l'espérance de vie à la naissance
+##### Banque de donnée sur l'espérance de vie à la naissance
 
-Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions.
+Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays en prenant en compte la taille de sa population. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions.
 
 ```{r include=FALSE, message=FALSE, warning=FALSE}
 # base de données 
-glimpse(life_exp_country)
+#glimpse(life_exp_country)
 
 # Changement de nom de variables (en lien avec la base de données CO2)
-life_exp_country2 = life_exp_country %>% 
-    rename("country" = "name") %>% 
-    rename("year" = "time") %>% 
-    rename("lifeexp" = "Life expectancy")
+#life_exp_country2 = life_exp_country %>% 
+#    rename("country" = "name") %>% 
+#    rename("year" = "time") %>% 
+#    rename("lifeexp" = "Life expectancy")
 
 # Continents
-unique(life_exp_country2$country)
-unique(life_exp_country2$geo)
-life_exp_country3 = life_exp_country2 %>% 
-    mutate(continent = countrycode(life_exp_country$geo, "genc3c", "continent"))
-unique(life_exp_country3$continent)
+#unique(life_exp_country2$country)
+#unique(life_exp_country2$geo)
+#life_exp_country3 = life_exp_country2 %>% 
+#    mutate(continent = countrycode(life_exp_country$geo, "genc3c", "continent"))
+#unique(life_exp_country3$continent)
 ```
 
 La base de données *Life Expectancy at Birth* contient 56 616 observations et 4 variables. On y retrouve les pays, leur code genc3c (GENC à 3 lettres), les années et leur espérance de vie.
@@ -153,65 +196,3 @@ ggplot(data = life_exp_continent2,
 ```
 
 On constate que l'espérance de vie a augmenté au cours des années. Ceci peut notamment être dû à des avancées médicales, des meilleures conditions de vie et d'hygiène. De plus, on peut observer que l'espérance de vie à la naissance la plus élevée se trouve en Europe, suivie de l'Amérique. L'Afrique se trouve au bas de l'échelle. À nouveau, l'Afrique qui se compose des pays en développement se trouve en dernière position du classement. Existe-t-il une relation entre le PIB par habitant et l'espérance de vie à la naissance?
-
-## Lien entre PIB par habitant et espérance de vie à la naissance
-
-```{r include= FALSE, message= FALSE, warning=FALSE}
-# Combinaison des deux bases de données
-co2_life_exp = merge(co_2_data4, life_exp_country2, by = c("country", "year"))
-
-# Données manquantes pour le PIB
-missing_gdp = co2_life_exp %>% 
-  select(country, gdp, year) %>% 
-  filter(!complete.cases(.))
-# La plus grande différence entre le manque de donnée
-a = table(missing_gdp$year)
-unclass(a)
-number_missing = tibble(a)
-number_missing = number_missing %>% 
-    mutate(diff = a - lag(a))
-max(number_missing, na.rm = TRUE)
-```
-
-La plus grande différence de donnée manquante se trouve entre 1949 et 1950. L'analyse va donc se faire à partir de 1950, où un grand nombre de données sont disponibles comparé aux années précédentes.
-
-```{r message=FALSE, warning=FALSE}
-# À partir de 1950
-co2_life_exp2 = co2_life_exp %>% 
-    filter(year >1949)
-co2_life_exp2_continent = co2_life_exp2 %>% 
-    group_by(continent, year) %>% 
-    summarise(across(c(gdp_per_capita, lifeexp), mean, na.rm = TRUE))
-
-# Graphique
-plot_ly(data = co2_life_exp2, x = ~gdp_per_capita, y = ~lifeexp, type = 'scatter', color = ~continent, frame = ~year, size = ~population, text = ~country, mode = 'markers',width = "100%", height = 500) %>% 
-    layout(legend = list(title= list(text = 'Continent')),
-         xaxis = list(title = 'PIB par habitant',
-                      zerolinecolor = "#ffff",
-                      gridcolor = "ffff",
-                      zerolinewidth = 2),
-         yaxis = list(title = 'Espérance de vie à la naissance',
-                      zerolinecolor = "#ffff",
-                      gridcolor = "ffff",
-                      zerolinewidth = 2),
-         plot_bgcolor='#e5ecf6')
-```
-
-On constate que l'espérance de vie à la naissance et le PIB par habitant on une relation positive. Quand l'espérance de vie à la naissance est élevé, le PIB est élevé. Quand l'espérance de vie à la naissance est basse, le PIB par habitant est bas. Une espérance de vie à la naissance élevée implique de bonnes conditions de vie au sein du pays. Ainsi, une population en bonne santé sera davantage productive. Il n'est donc pas surprenant que les continent Europe et Amérique ont un PIB par habitant plus élevé que celui de l'Afrique où l'espérance de vie à la naissance est basse. 
-
-## Comparaison des émissions entre continent ayant un PIB élevé et un PIB bas
-
-Jusqu'ici, nous avons constaté que le développement économique du pays est lié à l'espérance de vie à la naissance de la population. Mais un pays avec une forte activité économique, émet-il beaucoup de dioxyde de carbone et de gaz à effet de serre?
-
-```{r message=FALSE, warning=FALSE}
-# Comparaison entre l'Amérique et l'Afrique
-
-#co2_life_exp2_am_af = co2_life_exp2 %>% 
-# filter(continent == "Americas"| continent == "Africa") %>% 
-# group_by(continent, year) %>% 
-# summarise(mean = mean(total_ghg, na.rm = TRUE))
-
-
-
-```
- 
