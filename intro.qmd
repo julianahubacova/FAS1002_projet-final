@@ -2,7 +2,7 @@
 title: "Introduction"
 title-block-banner: true
 description: | 
-  Explication complémentaires et analyse technique.
+  Explications complémentaires et analyse technique
 date: "2022-12-21"
 author:
   - name: "Juliana Hubacova"
