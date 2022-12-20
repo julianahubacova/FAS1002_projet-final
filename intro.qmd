@@ -49,6 +49,9 @@ Pour débuter cette analyse, on va se concentrer sur les facteurs suivants : PIB
 # Combinaison des deux bases de données
 co2_life_exp = merge(co_2_data_pib_per_capita, life_exp_continent, by = c("country", "year"))
 
+# Enregistrement data processed
+write_csv(co2_life_exp, file = "data/processed/co2_life_exp.csv")
+
 # Données manquantes pour le PIB
 missing_gdp = co2_life_exp %>% 
   select(country, gdp, year) %>% 
