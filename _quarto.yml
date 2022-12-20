@@ -2,17 +2,15 @@ project:
   type: website
 
 website:
-  title: "FAS1002_projet-pratique"
+  title: "FAS1002_projet-final"
   description: | 
     "Page d'accueil du travail final pour le cours FAS1002 -
     Initiation à la programmation en sciences sociales à
     l'Université de Montréal donné lors du trimestre A2022."
 
   reader-mode: true
-# URL de votre site une fois publié - <VOTREUSERNAME> à changer 
-  site-url: https://VOTREUSERNAME.github.io/FAS1002_projet-final/
-# URL de votre répertoire - VOTREUSERNAME/VOTRE-RÉPERTOIRE à changer
-  repo-url: https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/
+  site-url: https://julianahubacova.github.io/FAS1002_projet-final/
+  repo-url: https://github.com/julianahubacova/projet_final/
   repo-actions: [edit, issue, source]
   
 # Options à changer pour le menu ou la barre de navigation
@@ -28,7 +26,7 @@ website:
         text: Page d'accueil
       - intro.qmd
       - href: import.qmd
-        text: Titre à changer
+        text: Importation
       - exploration.qmd
     right:
       - href: a-propos.qmd
@@ -39,9 +37,8 @@ website:
     left: |
       [Propulsé par des logiciels libres 💖](https://github.com/FAS1002/A22){.nav-link}
     center:
-    # Changer VOTRE NOM pour ce que vous voulez
-      - text: "VOTRE NOM"
-        href: mailto:VOTRECOURRIEL@example.com
+      - text: "Juliana Hubacova"
+        href: mailto:jhubacova@yahoo.com
     right:
       - icon: github
         href: https://github.com/FAS1002/
