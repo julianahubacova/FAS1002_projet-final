@@ -3,7 +3,7 @@ title: "Importation des données"
 title-block-banner: false
 description: 
     Informations concernant la provenance des données et leur importation. 
-date: "2022-12-20"
+date: "2022-12-21"
 author:
   - name: "Juliana Hubacova"
     url: https://github.com/VOTREUSERNAME
@@ -42,5 +42,22 @@ life_exp_continent = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-p
                               sheet = "data-for-regions-by-year")
 life_exp_country = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx", 
     sheet = "data-for-countries-etc-by-year")
+
+```
+
+```{r}
+#if(!file.exists(fpathowid)){
+#    file.remove(junk)
+#    download.file(url = urlowid,
+#                  destfile = fpathowid)
+#    paste("Le Fichier",
+#          fpathowid,
+#          "n'existait pas, il a donc été téléchargé à l'instant."
+#          )
+#} else {
+#    print(paste("Le Fichier",
+#                fpathowid,
+#                "existe déjà, il ne sera pas téléchargé à nouveau.")
+#    )}
 
 ```
