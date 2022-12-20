@@ -166,7 +166,3 @@ corrplot(mcor, type = "upper", order="hclust", tl.srt = 45, tl.col = "black")
 ```
 
 Le graphique affiche les corrélations positives en bleu et les corrélations négatives en rouge. L'intensité de la couleur montre le degré de corrélation entre les deux variables. On peut ainsi constater que l'espérance de vie à la naissance et les émissions totales de GES sont corrélées positivement. Le PIB par habitant et les émissions totales de GES ont un coefficient de corrélation proche de 0 et n'indique donc pas une relation entre eux.
-
-## Remerciements {.appendix}
-
-J'aimerais remercier toute la cohorte du cours FAS1002 de l'automne 2022 ainsi que le professer Samuel Guay pour leur aide et leur apprentissage tout au long de la session!
