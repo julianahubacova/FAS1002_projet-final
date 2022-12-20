@@ -17,7 +17,7 @@ format :
         df-print: kable
 ---
 
-Le projet a pour objectif de constater les relations existantes entre le PIB par habitant, l'espérance de vie et l'émissions de CO2 et de gaz à effet de serre entre les pays. Les données utilisées sont issues de deux banques de données différentes: @owidCO2 et @gapminder. De plus amples informations sur les base de données peuvent être retrouver dans l'onglet *Importation*.
+Le projet a pour objectif de constater les relations existantes entre le PIB par habitant, l'espérance de vie et l'émissions de CO2 et de gaz à effet de serre entre les pays. Les données utilisées sont issues de deux banques de données différentes: @owidco2andothergreenhousegasemissions et @gapminder. De plus amples informations sur les base de données peuvent être retrouver dans l'onglet *Importation*.
 
 Une première partie se concentre sur l'analyse descriptive des données (voir onglet *Exploration des données*) où l'on retrouve différentes statistiques sur les données. Les variables de chacune des banques de données sont observées individuellement afin d'en extraitre les tendances.
 
