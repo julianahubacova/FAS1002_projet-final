@@ -16,13 +16,15 @@ bibliography: references.bib
 
 Ce projet se concentre sur deux banques de données distinctes :
 
--   **CO2 and Greenhouse Gas Emissions** : base de données sur les émissions de CO2 et de gaz à effet de serre. Mise à jour régulièrement par @owidCO2. Les données sont disponibles aux liens suivants :
+-   **CO2 and Greenhouse Gas Emissions** : base de données sur les émissions de CO2 et de gaz à effet de serre. Mise à jour régulièrement par @owidco2andothergreenhousegasemissions. Les données sont disponibles aux liens suivants :
 
     URL : https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions
 
     Github : https://github.com/owid/co2-data
 
--   **Life Expectancy At Birth** : base de données sur l'espérance de vie à la naissance. Mise à jour régulièrement par @Gapminder. Les données sont disponibles au lien suivant :
+    Codebook : https://github.com/owid/co2-data/blob/master/owid-co2-codebook.csv
+
+-   **Life Expectancy At Birth** : base de données sur l'espérance de vie à la naissance. Mise à jour régulièrement par @gapminder. Les données sont disponibles au lien suivant :
 
     URL : https://www.gapminder.org/data/documentation/gd004/
 
