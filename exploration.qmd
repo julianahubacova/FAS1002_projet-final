@@ -206,8 +206,8 @@ ggplot(data = life_exp_continent2,
     labs(title = "Évolution de l'espérance de vie à la naissance", 
          subtitle = "À partir des données de Gapminder",
          x = "Années", 
-         y = "Espérance de vie à la naissance")
-    scale_color_discrete(name = "Continent", labels = c("Afrique", "Asie", "Europe", "Amérique")) +
+         y = "Espérance de vie à la naissance") +
+    scale_color_discrete(name = "Continent", labels = c("Afrique", "Amérique", "Asie", "Europe", "Océanie")) +
     theme_bw()
 ```
 
