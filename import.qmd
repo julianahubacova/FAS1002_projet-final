@@ -16,21 +16,20 @@ bibliography: references.bib
 
 Ce projet se concentre sur deux banques de données distinctes :
 
--   **CO2 and Greenhouse Gas Emissions** : base de données sur les émissions de CO2 et de gaz à effet de serre. Mise à jour régulièrement par @owidco2.
-
-    Les données sont disponibles :
+-   **CO2 and Greenhouse Gas Emissions** : base de données sur les émissions de CO2 et de gaz à effet de serre. Mise à jour régulièrement par @owidco2. Les données sont disponibles aux liens suivants :
 
     URL : https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions
 
     Github : https://github.com/owid/co2-data
 
--   **Life Expectancy At Birth** : base de données sur l'espérance de vie à la naissance. Mise à jour régulièrement par @Gapminder. Les données sont disponibles :
+-   **Life Expectancy At Birth** : base de données sur l'espérance de vie à la naissance. Mise à jour régulièrement par @Gapminder. Les données sont disponibles au lien suivant :
 
     URL : https://www.gapminder.org/data/documentation/gd004/
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(fs)
 library(tidyverse)
+library(readr)
 library(skimr)
 library(lubridate)
 library(readxl)
@@ -45,7 +44,17 @@ life_exp_country = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pra
 
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+# Importation banque de données OWID
+owid_url <- "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
+base_path <- path("data", "raw")
+fname_owid <- paste(today(),"owid-co2-data.csv", sep = "_")
+fpath_owid <- path(base_path, fname_owid)
+data_owid <- download.file(url = owid_url, destfile = fpath_owid)
+co_2_data <- read.csv(fpath_owid)
+
+# Téléchargement quotidien 
+
 #if(!file.exists(fpathowid)){
 #    file.remove(junk)
 #    download.file(url = urlowid,
@@ -59,5 +68,6 @@ life_exp_country = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pra
 #                fpathowid,
 #                "existe déjà, il ne sera pas téléchargé à nouveau.")
 #    )}
+
 
 ```
