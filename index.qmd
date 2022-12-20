@@ -15,11 +15,11 @@ format :
         df-print: kable
 ---
 
-Le projet a pour objectif de constater les relations existantes entre le PIB par habitant, l'espérance de vie et l'émissions de CO2 et de gaz à effet de serre entre les pays. Les données utilisées sont issues de deux banques de données différentes : @owidCO2 et @gapminder
+## Motivations du projet
 
-Une première partie se concentre sur l'analyse descriptive des données (voir onglet *Exploration des données*) où l'on retrouve différentes statistiques sur les données. Les variables de chacune des banques de données sont observées individuellement afin d'en observer les tendances.
+Pour ce projet, réalisé dans le cadre du cours FAS1002 "Programmation en sciences sociales", je souhaitais me focaliser sur les relations existantes entre le PIB par habitant, l'espérance de vie à la naissance et les émissions de CO2 et de gaz à effet de serre. Les analyses sont conduites à partir des données provenant de @gapminder et @owidCO2. Davantage d'informations sur les données se trouve dans l'onglet *Importation*.
 
-La seconde partie se concentre sur une analyse plus technique où les variables sont mises en relation afin de mettre en évidence des relations potentielles. Cette deuxième partie se trouve ci-dessous. 
+Avant d'entrer plus en détails dans une quelconque analyse, j'aimerais vous faire part de quelques chiffres concernant les émissions de co2 et gaz à effet de serre. Cependant, à cause de la pandémie qui a débuté vers la fin du mois de novembre 2019, les données pour 2020 et 2021 ne sont pas très précise. L'activité économique a chuté, la santé des individus s'est détériorée ce qui a eu un impact sur nos variables (PIB, émissions et espérance de vie). Ainsi pour vous mettre en contexte, j'ai décidé d'utiliser les données pré-covid, soit les données de l'année 2019.
 
 ```{r echo = FALSE, message= FALSE, warning=FALSE}
 library(readxl)
@@ -29,95 +29,38 @@ library(ggplot2)
 library(plotly)
 library(lubridate)
 library(patchwork)
+library(corrplot)
 ```
 
 ```{r echo=FALSE, message = FALSE, warning= FALSE}
-co_2_data = read_csv('~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/2022-12-19_owid-co2-data.csv')
-life_exp = read_csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/2022-12-20_gapm.csv")
+co2_life_exp = read.csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/processed/co2_life_exp.csv")
 ```
-
-## Lien entre PIB par habitant et espérance de vie à la naissance
-Existe-t-il une relation entre le PIB par habitant et l'espérance de vie à la naissance?
-
-```{r include= FALSE, message= FALSE, warning=FALSE}
-# Combinaison des deux bases de données
-#co2_life_exp = merge(co_2_data4, life_exp_continent2, by = c("continent", "year"))
-
-# Données manquantes pour le PIB
-#missing_gdp = co2_life_exp %>% 
-#  select(country, gdp, year) %>% 
-#  filter(!complete.cases(.))
-# La plus grande différence entre le manque de donnée
-#a = table(missing_gdp$year)
-#unclass(a)
-#number_missing = tibble(a)
-#number_missing = number_missing %>% 
-#    mutate(diff = a - lag(a))
-#max(number_missing, na.rm = TRUE)
-```
-
-La plus grande différence de donnée manquante se trouve entre 1949 et 1950. L'analyse va donc se faire à partir de 1950, où un grand nombre de données sont disponibles comparé aux années précédentes.
 
 ```{r message=FALSE, warning=FALSE}
-# À partir de 1950
-#co2_life_exp2 = co2_life_exp %>% 
-#    filter(year >1949)
-#co2_life_exp2_continent = co2_life_exp2 %>% 
-#   group_by(continent, year) %>% 
-#    summarise(across(c(gdp_per_capita, lifeexp), mean, na.rm = TRUE))
+# Chiffres pour 2019
+co2_life_exp2019 = co2_life_exp %>% 
+    filter(year == 2019) %>% 
+    select(country, year, population, gdp, gdp_per_capita, lifeexp, total_ghg, continent_tout) %>% 
+    group_by(continent_tout) %>% 
+        summarise(gdp_per_capita = mean(gdp_per_capita, na.rm = TRUE),
+                  lifeexp = mean(lifeexp, na.rm = TRUE),
+                  total_ghg = mean(total_ghg, na.rm = TRUE))
 
-# Graphique
-#plot_ly(data = co2_life_exp2, x = ~gdp_per_capita, y = ~lifeexp, type = 'scatter', color = ~continent, #frame = ~year, size = ~population, text = ~country, mode = 'markers',width = "100%", height = 500) %>% 
-#   layout(legend = list(title= list(text = 'Continent')),
-#       xaxis = list(title = 'PIB par habitant',
-#                      zerolinecolor = "#ffff",
-#                      gridcolor = "ffff",
-#                      zerolinewidth = 2),
-#         yaxis = list(title = 'Espérance de vie à la naissance',
-#                      zerolinecolor = "#ffff",
-#                      gridcolor = "ffff",
-#                      zerolinewidth = 2),
-#         plot_bgcolor='#e5ecf6')
+# Ajout des pourcentages
+co2_life_exp2019pourcent = co2_life_exp2019 %>% 
+    mutate(pourcentage = (total_ghg/sum(co2_life_exp2019$total_ghg))*100)
+
+gg1 = ggplot(co2_life_exp2019pourcent,
+       mapping = aes(x = "", y = pourcentage, fill = continent_tout)) +
+    geom_bar(width = 1, stat = 'identity')
+pie = gg1 + coord_polar("y", start = 0) + 
+    theme_bw() +
+    scale_fill_brewer(palette = "Blues")
+pie
 ```
 
-On constate que l'espérance de vie à la naissance et le PIB par habitant on une relation positive. Quand l'espérance de vie à la naissance est élevé, le PIB est élevé. Quand l'espérance de vie à la naissance est basse, le PIB par habitant est bas. Une espérance de vie à la naissance élevée implique de bonnes conditions de vie au sein du pays. Ainsi, une population en bonne santé sera davantage productive. Il n'est donc pas surprenant que les continent Europe et Amérique ont un PIB par habitant plus élevé que celui de l'Afrique où l'espérance de vie à la naissance est basse.
-
-## Comparaison des émissions entre continent ayant un PIB élevé et un PIB bas
-
-Jusqu'ici, nous avons constaté que le développement économique du pays est lié à l'espérance de vie à la naissance de la population. Mais un pays avec une forte activité économique, émet-il beaucoup de dioxyde de carbone et de gaz à effet de serre?
-
-```{r message=FALSE, warning=FALSE}
-# Comparaison entre l'Amérique et l'Afrique
-
-#co2_life_exp2_am_af = co2_life_exp2 %>% 
-# filter(continent == "Americas"| continent == "Africa") %>% 
-# group_by(continent, year) %>% 
-# summarise(mean = mean(total_ghg, na.rm = TRUE))
-
-
-
-```
-
-
-
-## Vous pourrez inclure des graphiques
-
-Comme la classique pyramide à la ci-dessous par exemple:
-
-```{r pie, fig.cap='Une très belle tarte', tidy=FALSE}
-par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c('Ciel', 'Côté ensoleillé de la pyramide', 'Côté ombragé de la pyramide'),
-  col = c('#0292D8', '#F7EA39', '#C4B632'),
-  init.angle = -50, border = NA
-)
-```
-
-<aside>Quand même très cool, non? Vous pouvez mettre des annotations sur le côté!</aside>
+On constate rapidement, qu'en 2019, l'Asie a émit la plus grande partie de toutes les émissions de co2 et de gaz à effet de serre. Pour voir comment, le PIB et l'espérance de vie peuvent être liés à cette variable vous pouvez consulter l'analyse dans les onglets suivants : *Exploration des données* et *Introduction*.
 
 ## Remerciements {.appendix}
 
-J'aimerais remercier toute la cohorte du cours FAS1002 de l'automne 2022 pour leur ouverture et efforts tout au long de la session!
-
-@owidenergy
+J'aimerais remercier toute la cohorte du cours FAS1002 de l'automne 2022 ainsi que le professer Samuel Guay pour leur aide et leur apprentissage tout au long de la session!
