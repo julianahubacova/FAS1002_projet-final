@@ -33,18 +33,10 @@ library(readr)
 library(skimr)
 library(lubridate)
 library(readxl)
+library(gsheet)
 ```
 
-```{r download, cache = TRUE}
-co_2_data = read.csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/owid-co2-data.csv")
-life_exp_continent = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx",
-                              sheet = "data-for-regions-by-year")
-life_exp_country = read_excel("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx", 
-    sheet = "data-for-countries-etc-by-year")
-
-```
-
-```{r message=FALSE, warning=FALSE}
+```{r cache = TRUE, message=FALSE, warning=FALSE}
 # Importation banque de données OWID
 owid_url <- "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
 base_path <- path("data", "raw")
@@ -69,5 +61,13 @@ co_2_data <- read.csv(fpath_owid)
 #                "existe déjà, il ne sera pas téléchargé à nouveau.")
 #    )}
 
+# Importation banque de données Gapminder
+gapminder_url <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=1003383399")
+base_path <- path("data", "raw")
+fname_gapminder <- paste(today(),"gapm.csv", sep = "_")
+fpath_gapminder <- path(base_path, fname_gapminder)
+write_csv(x = gapminder_url, file = fpath_gapminder)
+
+# Téléchargement mensuel
 
 ```
