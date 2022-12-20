@@ -162,8 +162,6 @@ life_exp2 = life_exp %>%
     rename("lifeexp" = "Life expectancy")
 
 # Continents
-unique(life_exp2$country)
-unique(life_exp_country2$geo)
 life_exp3 = life_exp2 %>% 
     mutate(continent = countrycode(life_exp2$geo, "genc3c", "continent"))
 unique(life_exp3$continent)
