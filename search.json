@@ -65,8 +65,8 @@
   {
     "objectID": "intro.html",
     "href": "intro.html",
-    "title": "Titre de votre page d’introduction",
+    "title": "Introduction",
     "section": "",
-    "text": "Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l’importation et la manipulation des données.\nJe vous conseille d’écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d’éviter de réécrire cette page plusieurs fois.\n\n\n\n\n\n\nImportant\n\n\n\nN’oubliez pas d’inclure vos références sur chacune des pages!\n\n\nPar exemple:\n\nLes données proviennent entre autres de (owidenergy?).\n\n\n\n\nCitationBibTeX@online{nom2023,\n  author = {Prénom Nom},\n  title = {Titre de votre page d’introduction},\n  date = {2023-09-12},\n  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//intro.html},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nPrénom Nom. 2023. “Titre de votre page d’introduction.”\nSeptember 12, 2023. https://VOTREUSERNAME.github.io/FAS1002_projet-final//intro.html."
+    "text": "Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l’importation et la manipulation des données.\nJe vous conseille d’écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d’éviter de réécrire cette page plusieurs fois.\n\n\n\n\n\n\nImportant\n\n\n\nN’oubliez pas d’inclure vos références sur chacune des pages!\n\n\nPar exemple:\n\nLes données proviennent entre autres de (owidenergy?).\n\n\n\n\nCitationBibTeX@online{hubacova2023,\n  author = {Juliana Hubacova},\n  title = {Introduction},\n  date = {2023-09-12},\n  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//intro.html},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nJuliana Hubacova. 2023. “Introduction.” September 12, 2023.\nhttps://VOTREUSERNAME.github.io/FAS1002_projet-final//intro.html."
   }
 ]
