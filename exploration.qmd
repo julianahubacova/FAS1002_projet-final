@@ -30,8 +30,6 @@ library(patchwork)
 ```{r echo=FALSE, message = FALSE, warning= FALSE}
 co_2_data = read_csv('~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/2022-12-19_owid-co2-data.csv')
 life_exp = read_csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/2022-12-20_gapm.csv")
-# life_exp_country = read_excel("~/Desktop/Automne #2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx", 
-#    sheet = "data-for-countries-etc-by-year")
 ```
 
 ### Banque de données sur les émissions des CO2 et les gaz à effet de serre.
@@ -192,6 +190,7 @@ life_exp_stt = life_exp_continent %>%
               max = max(lifeexp))
 head(life_exp_stt)
 ```
+
 Comment l'espérance de vie a-t-elle évoluée au fil du temps?
 
 ```{r message=FALSE, warning=FALSE}
@@ -231,7 +230,8 @@ ggplot(life_exp5,
          y = "Espérance de vie à la naissance") +
     theme_bw()
 ```
-On se rend compte que l'espérance de vie médiane ne dépasse pas 85 ans. Elle est supérieur en Europe, se situant aux alentours de 82 ans. En Amérique et en Asie, la médiane se situe proche de 80ans. ELle est relativement faible en Afrique et en Océanie comparé aux autres continents. 
+
+On se rend compte que l'espérance de vie médiane ne dépasse pas 85 ans. Elle est supérieur en Europe, se situant aux alentours de 82 ans. En Amérique et en Asie, la médiane se situe proche de 80ans. ELle est relativement faible en Afrique et en Océanie comparé aux autres continents.
 
 Calcul du temps écoulé entre la production de ce rapport et la première année que des données ont été récoltées dans le jeu de données *Life Expectancy at Birth*.
 
@@ -246,8 +246,3 @@ date_life_exp = life_exp2 %>%
 jours = difftime(as.POSIXct(today()),as.POSIXct(as.Date(min(date_life_exp$date), format = "%Y-%m-%d")))
 jours
 ```
-
-
-
-
-
