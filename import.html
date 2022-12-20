@@ -9,7 +9,7 @@
 <meta name="author" content="Juliana Hubacova">
 <meta name="description" content="Informations concernant la provenance des données et leur importation.">
 
-<title>FAS1002_projet-pratique - Importation des données</title>
+<title>FAS1002_projet_final - Importation des données</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,6 +85,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -142,7 +161,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <img src="./assets/img/FAS1002.png" alt="Logo du cours FAS1002" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">FAS1002_projet-pratique</span>
+    <span class="navbar-title">FAS1002_projet_final</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -160,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./import.html" aria-current="page">
- <span class="menu-text">Titre à changer</span></a>
+ <span class="menu-text">Importation</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./exploration.html">
@@ -170,7 +189,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./a-propos.html">
- <span class="menu-text">Page à droite</span></a>
+ <span class="menu-text">A propos</span></a>
   </li>  
 </ul>
               <div class="quarto-toggle-container">
@@ -229,7 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Date de publication</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">20 décembre 2022</p>
+      <p class="date">21 décembre 2022</p>
     </div>
   </div>
   
@@ -241,39 +260,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <p>Ce projet se concentre sur deux banques de données distinctes :</p>
 <ul>
-<li><p><strong>CO2 and Greenhouse Gas Emissions</strong> : base de données sur les émissions de CO2 et de gaz à effet de serre. Mise à jour régulièrement par <span class="citation" data-cites="owidco2">(<a href="#ref-owidco2" role="doc-biblioref"><strong>owidco2?</strong></a>)</span>.</p>
-<p>Les données sont disponibles :</p>
+<li><p><strong>CO2 and Greenhouse Gas Emissions</strong> : base de données sur les émissions de CO2 et de gaz à effet de serre. Mise à jour régulièrement par <span class="citation" data-cites="owidCO2">Hannah Ritchie et Rosado (<a href="#ref-owidCO2" role="doc-biblioref">2022</a>)</span>. Les données sont disponibles aux liens suivants :</p>
 <p>URL : https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions</p>
 <p>Github : https://github.com/owid/co2-data</p></li>
-<li><p><strong>Life Expectancy At Birth</strong> : base de données sur l’espérance de vie à la naissance. Mise à jour régulièrement par <span class="citation" data-cites="Gapminder">(<a href="#ref-Gapminder" role="doc-biblioref"><strong>Gapminder?</strong></a>)</span>. Les données sont disponibles :</p>
+<li><p><strong>Life Expectancy At Birth</strong> : base de données sur l’espérance de vie à la naissance. Mise à jour régulièrement par <span class="citation" data-cites="Gapminder">(<a href="#ref-Gapminder" role="doc-biblioref"><strong>Gapminder?</strong></a>)</span>. Les données sont disponibles au lien suivant :</p>
 <p>URL : https://www.gapminder.org/data/documentation/gd004/</p></li>
 </ul>
 <div class="cell">
 
 </div>
-<div class="cell" data-hash="import_cache/html/download_5ae403ff63f26f52eb97f86e599f94b7">
+<div class="cell" data-hash="import_cache/html/unnamed-chunk-2_20a389c657e56d4566c59a3eda10eeab">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>co_2_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/owid-co2-data.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>life_exp_continent <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx"</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sheet =</span> <span class="st">"data-for-regions-by-year"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>life_exp_country <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx"</span>, </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sheet =</span> <span class="st">"data-for-countries-etc-by-year"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importation banque de données OWID</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>owid_url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>base_path <span class="ot">&lt;-</span> <span class="fu">path</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>fname_owid <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">today</span>(),<span class="st">"owid-co2-data.csv"</span>, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>fpath_owid <span class="ot">&lt;-</span> <span class="fu">path</span>(base_path, fname_owid)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data_owid <span class="ot">&lt;-</span> <span class="fu">download.file</span>(<span class="at">url =</span> owid_url, <span class="at">destfile =</span> fpath_owid)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>co_2_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(fpath_owid)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Téléchargement quotidien </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#if(!file.exists(fpathowid)){</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    file.remove(junk)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#    download.file(url = urlowid,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                  destfile = fpathowid)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#    paste("Le Fichier",</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#          fpathowid,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#          "n'existait pas, il a donc été téléchargé à l'instant."</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#          )</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#} else {</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#    print(paste("Le Fichier",</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#                fpathowid,</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#                "existe déjà, il ne sera pas téléchargé à nouveau.")</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#    )}</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Importation banque de données Gapminder</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>gapminder_url <span class="ot">&lt;-</span> <span class="fu">gsheet2tbl</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676"</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>base_path <span class="ot">&lt;-</span> <span class="fu">path</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>fname_gapminder <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">today</span>(),<span class="st">"gapm.csv"</span>, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>fpath_gapminder <span class="ot">&lt;-</span> <span class="fu">path</span>(base_path, fname_gapminder)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(<span class="at">x =</span> gapminder_url, <span class="at">file =</span> fpath_gapminder)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Téléchargement mensuel</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hubacova2023,
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Les références</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-owidCO2" class="csl-entry" role="doc-biblioentry">
+Hannah Ritchie, Edouard Mathieu, Max Roser, et Pablo Rosado. 2022. <span>«&nbsp;CO2 and Greenhouse Gas Emissions&nbsp;»</span>. <em>Our World in Data</em>. <a href="https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions">https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions</a>.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hubacova2023,
   author = {Juliana Hubacova},
   title = {Importation des données},
-  date = {2023-08-12},
-  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html},
+  date = {2023-09-12},
+  url = {https://julianahubacova.github.io/FAS1002_projet-final//import.html},
   langid = {fr}
 }
 </code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">Veuillez citer ce travail comme suit&nbsp;:</div><div id="ref-hubacova2023" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Juliana Hubacova. 2023. <span>“Importation des données.”</span> August
-12, 2023. <a href="https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html">https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html</a>.
+Juliana Hubacova. 2023. <span>“Importation des données.”</span>
+September 12, 2023. <a href="https://julianahubacova.github.io/FAS1002_projet-final//import.html">https://julianahubacova.github.io/FAS1002_projet-final//import.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -526,11 +576,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left"><a href="https://github.com/FAS1002/A22" class="nav-link">Propulsé par des logiciels libres 💖</a></div>   
+    <div class="nav-footer-left"><a href="https://github.com/FAS1002/A22" class="nav-link">Propulsé par des logiciels libres</a></div>   
       <div class="nav-footer-center">
         <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="mailto:VOTRECOURRIEL@example.com">VOTRE NOM</a>
+    <a class="nav-link" href="mailto:jhubacova@yahoo.com">Juliana Hubacova</a>
   </li>  
 </ul>
       </div>
