@@ -34,9 +34,7 @@ life_exp_continent = read_csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pra
 #    sheet = "data-for-countries-etc-by-year")
 ```
 
-## Analyse descriptive
-
-##### Banque de données sur les émissions des CO2 et les gaz à effet de serre.
+### Banque de données sur les émissions des CO2 et les gaz à effet de serre.
 
 Cette banque de données contient de nombreuses informations sur les pays depuis 1850. Elle contient 46 523 observations et 74 variables. On y retrouve les pays, leur population, leur PIB, et leurs émissions de dioxyde de carbone et gaz à effets de serre.
 
@@ -151,7 +149,7 @@ p2+p1
 
 On constate que l'Asie et l'Amérique sont les continents ayant le PIB le plus élevé. Tandis que l'Afrique se retrouve avec le PIB le moins élevé. Ceci n'est pas surprenant puisque les pays en développement se trouve majoritairement en Afrique et les grandes puissances économiques, Chine et États-Unis, se trouvent respectivement en Asie et en Amérique. Par contre, lorsqu'on compare le PIB par habitant entre les différents continents on constate une différence dans le classement. C'est l'Océanie et l'Europe qui se trouve au top du classement, tandis que l'Afrique se trouve à nouveau en dernière position. Le PIB par habitant prend en considération à la fois la population et le PIB du pays. Ainsi, cette mesure nous sera plus utile pour la suite de notre analyse.
 
-##### Banque de donnée sur l'espérance de vie à la naissance
+### Banque de donnée sur l'espérance de vie à la naissance
 
 Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays en prenant en compte la taille de sa population. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions.
 
