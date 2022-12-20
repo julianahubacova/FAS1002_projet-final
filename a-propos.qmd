@@ -3,9 +3,9 @@ title: "À propos"
 toc: false
 ---
 
-<!--# Veuillez adapter le texte ci-dessous en lien avec votre projet -->
-
 ![](assets/img/FAS1002.png){fig-align="center" width="25%"}
+
+Ce projet a été effectué dans le cadre du cours FAS1002 *Introduction à la programmation en sciences sociales*. Informations complémentaires sur le cours et le programme ci-dessous.
 
 ## Bio
 
