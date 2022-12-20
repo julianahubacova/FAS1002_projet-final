@@ -3,11 +3,11 @@ title: "FAS1002_projet-final"
 bibliography: references.bib
 ---
 
-Vous pouvez faire le résumé de votre projet directement sur cette page et utiliser le document [intro](intro.qmd) pour décrire votre projet.
+Le projet a pour objectif de constater les relations existantes entre le PIB par habitant, l'espérance de vie et l'émissions de CO2 et de gaz à effet de serre entre les pays. Les données utilisées sont issues de deux banques de données différentes : @owidCO2 et @gapminder
 
-Chaque page est en fait un fichier Quarto standard. [^1]
+Une première partie se concentre sur l'analyse descriptive des données (voir onglet *Exploration des données*) où l'on retrouve différentes statistiques sur les données. Les variables de chacune des banques de données sont observées individuellement afin d'en observer les tendances.
 
-[^1]: Avec des petits trucs sympa comme des notes de bas de page. Ces documents sont les mêmes que nous avons utilisés tout au long de la session.
+La seconde partie se concentre sur une analyse plus technique où les variables sont mises en relation afin de mettre en évidence des relations potentielles (voir onglet *Analyse technique*).
 
 ## Vous pourrez inclure des graphiques
 
@@ -24,10 +24,6 @@ pie(
 ```
 
 <aside>Quand même très cool, non? Vous pouvez mettre des annotations sur le côté!</aside>
-
-### Toujours très important de mettre les bons niveaux de titres
-
-Un peu de texte de remplissage pour faire comme si la page était plus longue. *Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.*
 
 ## Remerciements {.appendix}
 
