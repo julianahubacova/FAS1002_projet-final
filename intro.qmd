@@ -2,7 +2,7 @@
 title: "Introduction"
 title-block-banner: true
 description: | 
-  Description du projet
+  Explication complémentaires et analyse technique.
 date: "2022-12-21"
 author:
   - name: "Juliana Hubacova"
@@ -12,15 +12,18 @@ author:
     orcid: 0000-0001-8128-783X
 citation: true
 bibliography: references.bib
+format :
+    html : 
+        df-print: kable
 ---
 
-Le projet a pour objectif de constater les relations existantes entre le PIB par habitant, l'espérance de vie et l'émissions de CO2 et de gaz à effet de serre entre les pays. Les données utilisées sont issues de deux banques de données différentes: @owidCO2 et @gapminder. De plus amples informations sur les base de données peuvent être retrouvé dans l'onglet *Importation*.
+Le projet a pour objectif de constater les relations existantes entre le PIB par habitant, l'espérance de vie et l'émissions de CO2 et de gaz à effet de serre entre les pays. Les données utilisées sont issues de deux banques de données différentes: @owidCO2 et @gapminder. De plus amples informations sur les base de données peuvent être retrouver dans l'onglet *Importation*.
 
 Une première partie se concentre sur l'analyse descriptive des données (voir onglet *Exploration des données*) où l'on retrouve différentes statistiques sur les données. Les variables de chacune des banques de données sont observées individuellement afin d'en extraitre les tendances.
 
 La seconde partie se concentre sur une analyse plus technique où les variables sont mises en relation afin de mettre en évidence des relations potentielles. Cette deuxième partie se trouve ci-dessous.
 
-#### Analyse technique
+### Analyse technique
 
 ```{r echo = FALSE, message= FALSE, warning=FALSE}
 library(readxl)
@@ -40,7 +43,7 @@ life_exp_continent = read_csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pra
 
 Pour débuter cette analyse, on va se concentrer sur les facteurs suivants : PIB par habitant et espérance de vie à la naissance. Pour cela, on va assembler nos deux banques de données et nettoyer notre nouveau dataset. 
 
-1. Préparation préliminaire
+###### Préparation préliminaire
 
 ```{r include= FALSE, message= FALSE, warning=FALSE}
 # Combinaison des deux bases de données
@@ -66,7 +69,7 @@ co2_life_exp2 = co2_life_exp %>%
 
 La plus grande différence de donnée manquante se trouve entre 1949 et 1950. L'analyse va donc se faire à partir de 1950, où un grand nombre de données sont disponibles comparé aux années précédentes.
 
-2. Lien entre PIB par habitant et espérance de vie à la naissance
+###### Lien entre PIB par habitant et espérance de vie à la naissance
 
 ```{r message=FALSE, warning=FALSE}
 # Choix des variables
@@ -99,7 +102,7 @@ cor.test(co2_life_exp3$gdp_per_capita,co2_life_exp3$lifeexp, use = "complete.obs
 
 On constate que le coefficient de corrélation entre le PIB par habitant et l'espérance de vie à la naissance est approximativement 0,6. On peut ainsi conclure à une relation positive entre ces deux variables. 
 
-3. Comparaison des émissions entre continent ayant un PIB élevé et un PIB bas
+###### Comparaison des émissions entre continent ayant un PIB élevé et un PIB bas
 
 Jusqu'ici, nous avons constaté que le développement économique du pays et l'espérance de vie à la naissance de la population sont lié positivement. Concentrons-nous maintenant sur les émissions de co2 et de gaz à effet de serre. Un pays avec une forte activité économique, émet-il davantage de dioxyde de carbone et de gaz à effet de serre qu'un pays avec une activité économique plus faible? Et que peut-on en dire avec l'espérance de vie à la naissance de la population. 
 
@@ -144,7 +147,7 @@ p2+p3
 
 ```
 
-On peut constater une éventuelle relation négative entre les émissions des gaz à effet de serre et l'espérance de vie. Avant de se prononcer, jetons un coup d'oeil sur le coefficient de corrélation. 
+Avant de se prononcer, jetons un coup d'oeil sur le coefficient de corrélation. 
 
 ```{r}
 # Matrice de corrélation, méthode pearson
@@ -153,18 +156,14 @@ co2_life_exp1990num =co2_life_exp_continent1990 %>%
            lifeexp = as.numeric(lifeexp),
            total_ghg = as.numeric(total_ghg))
 mcor = cor(co2_life_exp1990num[3:5], method = "pearson", use = "complete.obs")
-mcor
 
 # Corrélogramme
-corrplot(mcor, type="upper", order="hclust", tl.col="black", tl.srt=45)
-
+corrplot(mcor, type = "upper", order="hclust", tl.srt = 45, tl.col = "black")
 ```
 
+Les corrélations positives sont affichées en bleu et les corrélations négatives en rouge. L'intensité de la couleur montre le degré de corrélation entre les deux variables. 
 
 
+### Remerciements {.appendix}
 
-## Remerciements {.appendix}
-
-J'aimerais remercier toute la cohorte du cours FAS1002 de l'automne 2022 pour leur ouverture et efforts tout au long de la session!
-
-@owidenergy
+J'aimerais remercier toute la cohorte du cours FAS1002 de l'automne 2022 ainsi que le professer Samuel Guay pour leur aide et leur apprentissage tout au long de la session!
