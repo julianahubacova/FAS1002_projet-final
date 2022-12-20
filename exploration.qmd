@@ -3,7 +3,7 @@ title: "Exploration des données"
 title-block-banner: false
 description: | 
   Analyse descriptive des banques de données importées
-date: "2022-12-20"
+date: "2022-12-21"
 author:
   - name: "Juliana Hubacova"
     url: https://github.com/julianahubacova
