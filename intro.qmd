@@ -20,7 +20,6 @@ Une première partie se concentre sur l'analyse descriptive des données (voir o
 
 La seconde partie se concentre sur une analyse plus technique où les variables sont mises en relation afin de mettre en évidence des relations potentielles. Cette deuxième partie se trouve ci-dessous.
 
-
 #### Analyse technique
 
 ```{r echo = FALSE, message= FALSE, warning=FALSE}
@@ -101,37 +100,52 @@ On constate que le coefficient de corrélation entre le PIB par habitant et l'es
 
 3. Comparaison des émissions entre continent ayant un PIB élevé et un PIB bas
 
-Jusqu'ici, nous avons constaté que le développement économique du pays et l'espérance de vie à la naissance de la population sont lié positivement. Concentrons-nous maintenant sur les émissions de co2 et de gaz à effet de serre. Un pays avec une forte activité économique, émet-il davantage de dioxyde de carbone et de gaz à effet de serre qu'un pays avec une activité économique plus faible?
+Jusqu'ici, nous avons constaté que le développement économique du pays et l'espérance de vie à la naissance de la population sont lié positivement. Concentrons-nous maintenant sur les émissions de co2 et de gaz à effet de serre. Un pays avec une forte activité économique, émet-il davantage de dioxyde de carbone et de gaz à effet de serre qu'un pays avec une activité économique plus faible? Et que peut-on en dire avec l'espérance de vie à la naissance de la population. 
 
 ```{r message=FALSE, warning=FALSE}
 # Comparaison entre l'Amérique et l'Afrique
+co2_life_exp_continent = co2_life_exp3 %>% 
+   group_by(continent_tout, year) %>% 
+    summarise(across(c(gdp_per_capita, lifeexp, total_ghg), mean, na.rm = TRUE)) %>% 
+    ungroup()
+head(co2_life_exp_continent)
 
-#co2_life_exp2_am_af = co2_life_exp2 %>% 
-# filter(continent == "Americas"| continent == "Africa") %>% 
-# group_by(continent, year) %>% 
-# summarise(mean = mean(total_ghg, na.rm = TRUE))
+# Valeurs manquantes total_ghg
+missing_ghgtot = co2_life_exp_continent %>% 
+  select(continent_tout, year, total_ghg) %>% 
+  filter(!complete.cases(.))
 
+# Les données ont l'air d'apparaitre vers 1990 seulement
+co2_life_exp_continent1990 = co2_life_exp_continent %>% 
+    filter(year >1989)
 
+p1 = ggplot(co2_life_exp_continent1990,
+       mapping = aes(x = year, y = total_ghg, color = continent_tout)) +
+    geom_line() +
+    labs(title = "Évolution des GES de serre par continent au fil du temps",
+         subtitle = "D'après les données d'Our World in Data",
+         x = "Années",
+         y = "Émission total des GES") +
+    theme_bw()
+p2 = p1 + theme(legend.position = "none")
+
+p3 = ggplot(co2_life_exp_continent1990,
+       mapping = aes(x = year, y = lifeexp, color = continent_tout)) +
+    geom_line() +
+    labs(title = "Évolution de l'espérance de vie par continent au fil du temps",
+         subtitle = "D'après les données de Gapminder",
+         x = "Années",
+         y = "Espérance de vie") +
+    scale_color_discrete(name = "Continent") +
+    theme_bw()
+
+p2+p3
 
 ```
 
 
 
-## Vous pourrez inclure des graphiques
 
-Comme la classique pyramide à la ci-dessous par exemple:
-
-```{r pie, fig.cap='Une très belle tarte', tidy=FALSE}
-par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c('Ciel', 'Côté ensoleillé de la pyramide', 'Côté ombragé de la pyramide'),
-  col = c('#0292D8', '#F7EA39', '#C4B632'),
-  init.angle = -50, border = NA
-)
-```
-
-<aside>Quand même très cool, non? Vous pouvez mettre des annotations sur le côté!</aside>
 
 ## Remerciements {.appendix}
 
