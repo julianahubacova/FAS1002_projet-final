@@ -40,7 +40,12 @@ Le projet se base sur deux banques de données différentes : [CO2 and Greenhous
 33 directories, 46 files
 ```
 
+## Principaux documents regroupant l'analyse
 
+-   L'**import.qmd** présentes des informations complémentaires sur les banques de données importées et leur provenance.
+-   L'**index.qmd** présente le sujet du projet et met en contexte le lecteur.
+-   L'**intro.qmd** apporte une analyse plus profonde et met en lien les différentes variables des deux tables de données combinés.
+-   L'**exploration.qmd** offre des analyses descriptives sur les banques de données individuelles.
 
 ## Principaux packages R utilisés dans ce site:
 
