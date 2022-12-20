@@ -41,17 +41,22 @@ Le projet se base sur deux banques de données différentes : [CO2 and Greenhous
 ```
 
 
-## Principaux packages R utilisés dans ce site qui sert d'exemple:
+
+## Principaux packages R utilisés dans ce site:
 
 -   R Core Team (2020). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. <https://www.R-project.org/>
 
 -   H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016. <https://ggplot2.tidyverse.org>
 
--   Joe Cheng, Bhaskar Karambelkar and Yihui Xie (2021). leaflet: Create Interactive Web Maps with the JavaScript 'Leaflet' Library. R package version 2.0.4.1. <https://CRAN.R-project.org/package=leaflet>
-
 -   C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall/CRC. Florida, 2020. <https://plotly-r.com>
 
--   Jennifer Bryan (2017). gapminder: Data from Gapminder. R package version 0.3.0. <https://CRAN.R-project.org/package=gapminder>
+-   H. Wickham, J. Bryan, RStudio, M. Kalicinski, K. Valery, C. Leitienne, B. Colbert, D. Hoerl, E. Miller. Import excel files into R. R package version 1.4.1.<https://cran.r-project.org/package=readxl>
+
+-   V. Spinu, G. Grolemund, H. Wickham, D. Vaughan, I. Lyttle, I. Costigan, J. Law, D. Mitarotonda, J. Larmarange, J. Boiser, C. Hee Lee. Functions to work with date-times and time-spans: fast and user friendly parsing of date-time data, extraction and updating of components of a date-time, algebraic manipulation on date-time and time-span objects. R package version 1.9.0.<https://cran.r-project.org/package=lubridate>
+
+-   Vincent Arel-Bundock, CJ Yetman, Nils Enevoldsen, Samuel Meichtry. Standardize country names, convert them into one of 40 different coding schemes, convert between coding schemes, and assign region descriptors. R package version 1.4.0. <https://cran.r-project.org/package=countrycode>
+
+-   T. Wei, V. Simko, M. Levy, Y. Xie, Y. Jin, J. Zemla, M. Freidank, J. Cai, T. Protivinsky. Provides a visual exploratory tool on correlation matrix that supports automatic variable reordering to help detect hidden patterns among variables. R package version 0.92. <https://cran.r-project.org/package=corrplot>
 
 ## Licence
 
