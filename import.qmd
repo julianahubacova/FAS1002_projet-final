@@ -16,7 +16,7 @@ bibliography: references.bib
 
 Ce projet se concentre sur deux banques de données distinctes :
 
--   **CO2 and Greenhouse Gas Emissions** : base de données sur les émissions de CO2 et de gaz à effet de serre. Mise à jour régulièrement par @owidco2. Les données sont disponibles aux liens suivants :
+-   **CO2 and Greenhouse Gas Emissions** : base de données sur les émissions de CO2 et de gaz à effet de serre. Mise à jour régulièrement par @owidCO2. Les données sont disponibles aux liens suivants :
 
     URL : https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions
 
@@ -62,7 +62,7 @@ co_2_data <- read.csv(fpath_owid)
 #    )}
 
 # Importation banque de données Gapminder
-gapminder_url <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=1003383399")
+gapminder_url <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676")
 base_path <- path("data", "raw")
 fname_gapminder <- paste(today(),"gapm.csv", sep = "_")
 fpath_gapminder <- path(base_path, fname_gapminder)
