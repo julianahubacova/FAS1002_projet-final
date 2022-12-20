@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "FAS1002_projet-final"
+  title: "FAS1002_projet_final"
   description: | 
     "Page d'accueil du travail final pour le cours FAS1002 -
     Initiation à la programmation en sciences sociales à
@@ -30,12 +30,12 @@ website:
       - exploration.qmd
     right:
       - href: a-propos.qmd
-        text: Page à droite 
+        text: A propos 
 
 # footer
   page-footer:
     left: |
-      [Propulsé par des logiciels libres 💖](https://github.com/FAS1002/A22){.nav-link}
+      [Propulsé par des logiciels libres](https://github.com/FAS1002/A22){.nav-link}
     center:
       - text: "Juliana Hubacova"
         href: mailto:jhubacova@yahoo.com
