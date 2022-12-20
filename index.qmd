@@ -17,7 +17,7 @@ format :
 
 ## Motivations du projet
 
-Pour ce projet, réalisé dans le cadre du cours FAS1002 "Programmation en sciences sociales", je souhaitais me focaliser sur les relations existantes entre le PIB par habitant, l'espérance de vie à la naissance et les émissions de CO2 et de gaz à effet de serre. Les analyses sont conduites à partir des données provenant de @gapminder et @owidCO2. Davantage d'informations sur les données se trouve dans l'onglet *Importation*.
+Pour ce projet, réalisé dans le cadre du cours FAS1002 "Programmation en sciences sociales", je souhaitais me focaliser sur les relations existantes entre le PIB par habitant, l'espérance de vie à la naissance et les émissions de CO2 et de gaz à effet de serre. Les analyses sont conduites à partir des données provenant de @gapminder et @owidco2andothergreenhousegasemissions. Davantage d'informations sur les données se trouve dans l'onglet *Importation*.
 
 Avant d'entrer plus en détails dans une quelconque analyse, j'aimerais vous faire part de quelques chiffres concernant les émissions de co2 et gaz à effet de serre. Cependant, à cause de la pandémie qui a débuté vers la fin du mois de novembre 2019, les données pour 2020 et 2021 ne sont pas très précise. L'activité économique a chuté, la santé des individus s'est détériorée ce qui a eu un impact sur nos variables (PIB, émissions et espérance de vie). Ainsi pour vous mettre en contexte, j'ai décidé d'utiliser les données pré-covid, soit les données de l'année 2019.
 
