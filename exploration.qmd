@@ -147,6 +147,11 @@ p2+p1
 
 On constate que l'Asie et l'Amérique sont les continents ayant le PIB le plus élevé. Tandis que l'Afrique se retrouve avec le PIB le moins élevé. Ceci n'est pas surprenant puisque les pays en développement se trouve majoritairement en Afrique et les grandes puissances économiques, Chine et États-Unis, se trouvent respectivement en Asie et en Amérique. Par contre, lorsqu'on compare le PIB par habitant entre les différents continents on constate une différence dans le classement. C'est l'Océanie et l'Europe qui se trouve au top du classement, tandis que l'Afrique se trouve à nouveau en dernière position. Le PIB par habitant prend en considération à la fois la population et le PIB du pays. Ainsi, cette mesure nous sera plus utile pour la suite de notre analyse.
 
+```{r}
+# Enregistrement de la banque de donnée modifiée
+write_csv(co_2_data_pib_per_cap, file = "data/processed/co_2_data_pib_per_cap.csv")
+```
+
 ### Banque de donnée sur l'espérance de vie à la naissance
 
 Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays en prenant en compte la taille de sa population. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions. La base de données *Life Expectancy at Birth* contient 56 616 observations et 4 variables. On y retrouve les pays, leur code genc3c (GENC à 3 lettres), les années et leur espérance de vie.
@@ -244,3 +249,9 @@ date_life_exp = life_exp2 %>%
 jours = difftime(as.POSIXct(today()),as.POSIXct(as.Date(min(date_life_exp$date), format = "%Y-%m-%d")))
 jours
 ```
+
+```{r}
+# Enregistrement de la banque de donnée modifiée
+write_csv(life_exp_continent, file = "data/processed/life_exp_continent.csv")
+```
+
