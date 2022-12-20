@@ -74,12 +74,14 @@ co_2_data5 = co_2_data4 %>%
     ungroup()
 
 # Les pays ayant un PIB par habitant faible
-co_2_data5 %>% 
+pib_bas = co_2_data5 %>% 
     arrange(gdp_per_capita)
+head(pib_bas)
 
 #Les pays ayant un PIB par habitant élevé
-co_2_data5 %>% 
+pib_haut = co_2_data5 %>% 
     arrange(- gdp_per_capita)
+head(pib_haut)
 ```
 
 On constate que les pays avec le plus faible PIB par habitant sont le Burundi, la Guinée, le Malawi et l'Éthiopie. Ces pays font partie des pays qu'on considère comme sous-développé. Tandis que les pays les plus développé économiquement connaissent un PIB par habitant plus élevé. Le pays avec un PIB par habitant le plus élevé est le Qatar avec un montant de 60 018 USD (dollars constants de 2011). Mais qu'en est-il d'un point de vue des continents?
@@ -212,3 +214,4 @@ Jusqu'ici, nous avons constaté que le développement économique du pays est li
 
 
 ```
+ 
