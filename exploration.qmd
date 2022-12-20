@@ -29,7 +29,7 @@ library(patchwork)
 
 ```{r echo=FALSE, message = FALSE, warning= FALSE}
 co_2_data = read_csv('~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/2022-12-19_owid-co2-data.csv')
-life_exp_continent = read_csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/2022-12-19_gapm.csv")
+life_exp = read_csv("~/Desktop/Automne 2022/FAS1002/FAS1002_projet-pratique/data/raw/2022-12-20_gapm.csv")
 # life_exp_country = read_excel("~/Desktop/Automne #2022/FAS1002/FAS1002_projet-pratique/data/raw/Gapminder_life_expectancy_v12.xlsx", 
 #    sheet = "data-for-countries-etc-by-year")
 ```
@@ -54,7 +54,7 @@ co_2_data2 = co_2_data %>%
   mutate(continent = countrycode(co_2_data$iso_code, "iso3c", "continent"))
 
 # Variables manquantes 
-missing = co_2_data2 %>% 
+missing_co2 = co_2_data2 %>% 
   select(country, continent) %>% 
   filter(!complete.cases(.))
 
@@ -151,46 +151,103 @@ On constate que l'Asie et l'Amérique sont les continents ayant le PIB le plus �
 
 ### Banque de donnée sur l'espérance de vie à la naissance
 
-Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays en prenant en compte la taille de sa population. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions.
+Le PIB par habitant est un indicateur économique puissant qui nous permet de constater le comportement économique d'un pays en prenant en compte la taille de sa population. Maintenant, on se focalise sur l'espérance de vie pour voir comment celle-ci a évolué au cours du temps et des régions. La base de données *Life Expectancy at Birth* contient 56 616 observations et 4 variables. On y retrouve les pays, leur code genc3c (GENC à 3 lettres), les années et leur espérance de vie.
 
-```{r include=FALSE, message=FALSE, warning=FALSE}
+```{r include = FALSE, message=FALSE, warning=FALSE}
 # base de données 
-#glimpse(life_exp_country)
+glimpse(life_exp)
 
-# Changement de nom de variables (en lien avec la base de données CO2)
-#life_exp_country2 = life_exp_country %>% 
-#    rename("country" = "name") %>% 
-#    rename("year" = "time") %>% 
-#    rename("lifeexp" = "Life expectancy")
-
-# Continents
-#unique(life_exp_country2$country)
-#unique(life_exp_country2$geo)
-#life_exp_country3 = life_exp_country2 %>% 
-#    mutate(continent = countrycode(life_exp_country$geo, "genc3c", "continent"))
-#unique(life_exp_country3$continent)
-```
-
-La base de données *Life Expectancy at Birth* contient 56 616 observations et 4 variables. On y retrouve les pays, leur code genc3c (GENC à 3 lettres), les années et leur espérance de vie.
-
-```{r message= FALSE, warning= FALSE}
-# Utilisation de le feuille de calcul sur les continents
-life_exp_continent2 = life_exp_continent %>% 
-    rename("continent" = "name") %>% 
+# Changement de nom de variables en lien avec la base de données CO2
+life_exp2 = life_exp %>% 
+    rename("country" = "name") %>% 
     rename("year" = "time") %>% 
     rename("lifeexp" = "Life expectancy")
 
+# Continents
+unique(life_exp2$country)
+unique(life_exp_country2$geo)
+life_exp3 = life_exp2 %>% 
+    mutate(continent = countrycode(life_exp2$geo, "genc3c", "continent"))
+unique(life_exp3$continent)
+
+# quelles sont les valeurs manquantes?
+missing_life_exp = life_exp3 %>% 
+  select(country, continent) %>% 
+  filter(!complete.cases(.))
+table(missing_life_exp$country)
+
+# ajout du continent Asie pour la Palestine
+life_exp_continent = life_exp3 %>% dplyr::mutate(continent_tout = replace_na(continent, "Asia"))
+```
+
+Quelles sont l'âge moyen, médian, l'écart-type, maximal et minimal de l'espérance de vie à la naissance par année et par continent?
+
+```{r warning=TRUE, message=FALSE}
+life_exp_stt = life_exp_continent %>% 
+    group_by(continent_tout, year) %>% 
+    summarise(mean = mean(lifeexp),
+              median = median(lifeexp),
+              sd = sd(lifeexp),
+              min = min(lifeexp),
+              max = max(lifeexp))
+head(life_exp_stt)
+```
+Comment l'espérance de vie a-t-elle évoluée au fil du temps?
+
+```{r message=FALSE, warning=FALSE}
+# Préparation pour le graphique
+life_exp_continent2 = life_exp_continent %>% 
+    group_by(year, continent_tout) %>% 
+    summarise(lifeexp = mean(lifeexp, na.rm = TRUE)) %>% 
+    ungroup()
+
 ggplot(data = life_exp_continent2, 
-       mapping = aes(x = year, y = lifeexp, group = continent, color = continent)) +
+       mapping = aes(x = year, y = lifeexp, group = continent_tout, color = continent_tout)) +
     geom_line() +
     geom_vline(xintercept =year(Sys.time()), colour = "black", alpha = .6, linetype = "dashed") +
     annotate("text", x = year(Sys.time()), y = 50, label = "Cette année", size = 3, color = "black", alpha = .6) +
     labs(title = "Évolution de l'espérance de vie à la naissance", 
          subtitle = "À partir des données de Gapminder",
          x = "Années", 
-         y = "Espérance de vie à la naissance") +
+         y = "Espérance de vie à la naissance")
     scale_color_discrete(name = "Continent", labels = c("Afrique", "Asie", "Europe", "Amérique")) +
     theme_bw()
 ```
 
-On constate que l'espérance de vie a augmenté au cours des années. Ceci peut notamment être dû à des avancées médicales, des meilleures conditions de vie et d'hygiène. De plus, on peut observer que l'espérance de vie à la naissance la plus élevée se trouve en Europe, suivie de l'Amérique. L'Afrique se trouve au bas de l'échelle. À nouveau, l'Afrique qui se compose des pays en développement se trouve en dernière position du classement. Existe-t-il une relation entre le PIB par habitant et l'espérance de vie à la naissance?
+On constate que l'espérance de vie a augmenté au cours des années. Ceci peut notamment être dû à des avancées médicales, des meilleures conditions de vie et d'hygiène. De plus, on peut observer que l'espérance de vie à la naissance la plus élevée se trouve en Europe, suivie de l'Amérique et de l'Asie. L'Afrique se trouve au bas de l'échelle. À nouveau, l'Afrique qui se compose des pays en développement se trouve en dernière position du classement. Par curiosité, regardons l'espérance de vie au cours des 20 dernières années (2001-2021).
+
+```{r}
+# Espérance de vie dans les 20 dernières années
+life_exp5 = life_exp_continent2 %>% 
+    filter(year > 2000)
+
+ggplot(life_exp5, 
+       mapping = aes(x = continent_tout, y = lifeexp)) +
+    geom_boxplot(fill = "#77B5FE") +
+    scale_x_discrete(labels = c("Afrique", "Amérique", "Asie", "Europe", "Océanie")) +
+    labs(title = "Espérance de vie à la naissance durant les 20 dernières années",
+         subtitle = "D'après les données de Gapminder", 
+         x = "Continents",
+         y = "Espérance de vie à la naissance") +
+    theme_bw()
+```
+On se rend compte que l'espérance de vie médiane ne dépasse pas 85 ans. Elle est supérieur en Europe, se situant aux alentours de 82 ans. En Amérique et en Asie, la médiane se situe proche de 80ans. ELle est relativement faible en Afrique et en Océanie comparé aux autres continents. 
+
+Calcul du temps écoulé entre la production de ce rapport et la première année que des données ont été récoltées dans le jeu de données *Life Expectancy at Birth*.
+
+```{r}
+# Ajout du mois et du jours dans la date
+date_life_exp = life_exp2 %>% 
+    mutate(mois_et_jour = "01/01") %>% 
+    unite(year, mois_et_jour, col = year, sep = "/") %>% 
+    mutate(date = as.Date(year, format= "%Y/%m/%d"))
+
+# Nombre de jours écoulés
+jours = difftime(as.POSIXct(today()),as.POSIXct(as.Date(min(date_life_exp$date), format = "%Y-%m-%d")))
+jours
+```
+
+
+
+
+
