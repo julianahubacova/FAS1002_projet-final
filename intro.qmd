@@ -116,6 +116,7 @@ co2_life_exp_continent = co2_life_exp3 %>%
     summarise(across(c(gdp_per_capita, lifeexp, total_ghg), mean, na.rm = TRUE)) %>% 
     ungroup()
 head(co2_life_exp_continent)
+write_csv(co2_life_exp_continent, file = "data/processed/co2_life_exp_continent.csv")
 
 # Valeurs manquantes total_ghg
 missing_ghgtot = co2_life_exp_continent %>% 
